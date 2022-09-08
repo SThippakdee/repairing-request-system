@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_SESSION)) session_start();
+    if(session_status()==PHP_SESSION_NONE) session_start();
     //require_once("resource/sql/alumniDB-con.php");
 
     if(isset($_POST['username']) && isset($_POST['password'])){
@@ -13,8 +13,8 @@
         // if($result->num_rows>0){
         //     $row=$result->fetch_assoc();
         //     if(password_verify($_POST['password'], $row['password'])){
-        //         $_SESSION["userID"] = $row["uID"];
-        //         $_SESSION["userLevel"] = $row["level"];
+        //         $_SESSION["RWeb-userID"] = $row["uID"];
+        //         $_SESSION["RWeb-userLevel"] = $row["level"];
                 
         //         if(!empty($_POST["remember"])) {
         //             setcookie ("username",$_POST["username"],time()+ (365 * 24 * 60 * 60));
@@ -50,8 +50,8 @@
                 // $userID = ""
                 // $userLevel = ""
 
-                $_SESSION["userID"] = 10001;
-                $_SESSION["userLevel"] = 1;
+                $_SESSION["RWeb-userID"] = 10001;
+                $_SESSION["RWeb-userLevel"] = 1;
                 echo "success";
             }else{
                 echo "รหัสผ่านไม่ถูกต้อง โปรดตรวจสอบรหัสผ่าน";

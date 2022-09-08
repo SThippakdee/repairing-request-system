@@ -2,6 +2,10 @@
 $(document).ready(function () {
     var title = $('title').text();
     $('.sidebar-item[data-title="'+ title +'"]').addClass('active');
+    
+    var page = $('#pageName').text();
+    ($('.sidebar-link[data-page="'+ page +'"]').parent()).parent().addClass('show');
+    $('.sidebar-link[data-page="'+ page +'"]').addClass('text-light');
 });
 
 //confirm logout dialog
