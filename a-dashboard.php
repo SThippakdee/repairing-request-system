@@ -226,7 +226,7 @@
 														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 p-1">รอดำเนินการ</span></td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
 												<td class="d-none d-md-table-cell">
 													สุชาติ แก้วประดิษฐ์ <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
@@ -242,7 +242,7 @@
 														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 p-1">รอดำเนินการ</span></td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
 												<td class="d-none d-md-table-cell">
 													สุชาติ แก้วประดิษฐ์ <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
@@ -258,7 +258,7 @@
 														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
 													</span>
 												</td>
-												<td><span class="badge bg-danger w-100 p-1">ยกเลิกรายการ</span></td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
 												<td class="d-none d-md-table-cell">
 													สุชาติ แก้วประดิษฐ์ <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
@@ -274,7 +274,7 @@
 														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
 													</span>
 												</td>
-												<td><span class="badge bg-danger w-100 p-1">ยกเลิกรายการ</span></td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
 												<td class="d-none d-md-table-cell">
 													สุชาติ แก้วประดิษฐ์ <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
@@ -290,7 +290,7 @@
 														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
 													</span>
 												</td>
-												<td><span class="badge bg-success w-100 p-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
 												<td class="d-none d-md-table-cell">
 													สุชาติ แก้วประดิษฐ์ <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
@@ -306,7 +306,7 @@
 														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
 													</span>
 												</td>
-												<td><span class="badge bg-primary w-100 p-1">กำลังดำเนินการ</span></td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
 												<td class="d-none d-md-table-cell">
 													สุชาติ แก้วประดิษฐ์ <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
@@ -322,7 +322,7 @@
 														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
 													</span>
 												</td>
-												<td><span class="badge bg-success w-100 p-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
 												<td class="d-none d-md-table-cell">
 													สุชาติ แก้วประดิษฐ์ <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">

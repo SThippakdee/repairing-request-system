@@ -6,12 +6,9 @@
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
-							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
-                				<img src="img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle me-1"/>
-              				</a>
-							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                 				<img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle me-1"/>
-								<span class="text-dark">Name Lastname</span>
+								<span class="text-dark d-none d-sm-inline-block">Name Lastname</span>
               				</a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="profile.php"><i class="fa-solid fa-user-large me-1"></i>บัญชีผู้ใช้</a>

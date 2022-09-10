@@ -15,16 +15,16 @@
 							<span class="align-middle">Dashboard</span>
             			</a>
 					</li>
-					<li class="sidebar-item" data-title="จัดการบัญชีผู้ใช้">
+					<li class="sidebar-item" data-title="บัญชีผู้ใช้">
 						<a class="sidebar-link" href="a-user.php">
 							<i class="fa-solid fa-lg fa-user-group"></i>
-							<span class="align-middle">จัดการบัญชีผู้ใช้</span>
+							<span class="align-middle">บัญชีผู้ใช้</span>
             			</a>
 					</li>
-					<li class="sidebar-item" data-title="จัดการรายการแจ้งซ่อม"> 
+					<li class="sidebar-item" data-title="รายการแจ้งซ่อม"> 
 						<a class="sidebar-link" href="a-request.php">
 							<i class="fa-solid fa-lg fa-screwdriver-wrench me-3"></i>
-							<span class="align-middle">จัดการรายการแจ้งซ่อม</span>
+							<span class="align-middle">รายการแจ้งซ่อม</span>
             			</a>
 					</li>
 					<li class="sidebar-item" data-title="จัดการข้อมูลระบบ">

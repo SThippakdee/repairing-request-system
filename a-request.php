@@ -18,21 +18,21 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>จัดการรายการแจ้งซ่อม</title>
+	<title>รายการแจ้งซ่อม</title>
 
 	<!-- Include fonts/css/js -->
 	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
 	
+	<link href="asset/vendors/datatable/datatables.min.css" rel="stylesheet">
+	<link href="asset/vendors/datatable/buttons.dataTables.min.css" rel="stylesheet">
 	<link href="asset/css/app.css" rel="stylesheet">
 	<link href="asset/vendors/fontawesome-6.1.2/css/all.min.css" rel="stylesheet">
 	
 	<script src="asset/js/app.js"></script>
 	<script src="asset/vendors/jquery-3.6.0/jquery-3.6.0.min.js"></script>
     <script src="asset/vendors/sweetalert2/sweetalert2.all.min.js"></script>
-	<script src="asset/vendors/chartjs/Chart.min.js"></script>
-
-	<!--ลบนี่-->
-	
+	<script src="asset/vendors/datatable/datatables.min.js"></script>
+	<script src="asset/vendors/datatable/dataTables.buttons.min.js"></script>
 
 	<!-- Page Style -->
 	<STYLE type="text/css">
@@ -41,6 +41,9 @@
 		}
 		.clickable {
 			cursor: pointer;
+		}
+		.dataTables_filter {
+			display: none;
 		}
 	</STYLE>
 </head>
@@ -57,245 +60,755 @@
 			<main class="content" style="background-color: #EBEBEB;">
 				<div class="container-fluid p-0">
 					<!--Start Content-->
-					<h3 id="pageName" class="fw-bold mb-3">จัดการรายการแจ้งซ่อม</h3>
+					<h3 id="pageName" class="fw-bold mb-3">รายการแจ้งซ่อม</h3>
 
 					<div class="row row-cols-1 g-4">
 						<div class="col">
 							<div class="card h-100 shadow-lg">
 							<div class="card-body">
-								<a class="btn btn-lg btn-primary mt-2"><i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>เพิ่มรายการใหม่</a>
-								<div class="table-responsive">
-									<table class="table table-hover my-0 mt-4">
+								
+								<div class="row g-3 px-2 mb-3">
+									<div class="col-12 col-lg-6">
+										<div class="row g-2">
+											<div class="col-6">
+												<a class="btn btn-lg btn-primary w-100"><i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>เพิ่มรายการ</a>
+											</div>
+											<div class="col-6">
+												<a id="print" class="btn btn-lg btn-primary w-100"><i class="fa-solid fa-print fa-lg me-2"></i>พิมพ์รายการ</a>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 col-lg-6">
+										<input id="searchWord" class="form-control form-control-lg" type="text" placeholder="ค้นหา..." autofocus autocomplete="off">
+									</div>
+									<hr>
+								</div>
+
+									<table id="table" class="table table-hover table-striped mt-2 display nowrap" style="width:100%">
 										<thead>
 											<tr>
-												<th>วันที่แจ้ง</th>
-												<th>รหัส</th>
-												<th>ชื่อผู้แจ้ง</th>
-												<th>ครุภัณฑ์</th>
-												<th>สถานะ</th>
-												<th>ผู้ดำเนินการ</th>
+												<th colspan="6" class="h5 px-0">
+													<span class="badge bg-secondary py-1">
+														รายการทั้งหมด
+														<span class="badge bg-light text-dark ms-2 p-1">
+															200
+														</span>
+													</span>
+													<span class="badge bg-warning py-1">
+														รอดำเนินการ
+														<span class="badge bg-light text-dark ms-2 p-1">
+															200
+														</span>
+													</span>
+													<span class="badge bg-primary py-1">
+														กำลังดำเนินการ
+														<span class="badge bg-light text-dark ms-2 p-1">
+															200
+														</span>
+													</span>
+													<span class="badge bg-success py-1">
+														ดำเนินการเสร็จสิ้น
+														<span class="badge bg-light text-dark ms-2 p-1">
+															200
+														</span>
+													</span>
+													<span class="badge bg-danger py-1">
+														ยกเลิกรายการ
+														<span class="badge bg-light text-dark ms-2 p-1">
+															200
+														</span>
+													</span>
+												</th>
+											</tr>
+											<tr>
+												<th width="83">วันที่แจ้ง</th>
+												<th width="100">รหัส</th>
+												<th width="200">ชื่อผู้แจ้ง</th>
+												<th width="200">เรื่องที่ขอบริการ</th>
+												<th width="124">สถานะ</th>
+												<th width="200">ผู้ดำเนินการ</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr class="clickable">
-												<td>01/01/2021</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														REQ-100001
-													</span>
+													01/01/2021
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														นพดล หมื่นศรี
-													</span>
-													 <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 220px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
+													REQ-100001
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														เครื่องคอมพิวเตอร์
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
 														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 p-1">รอดำเนินการ</span></td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														สุชาติ แก้วประดิษฐ์ 
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
+													สุชาติ แก้วประดิษฐ์
 												</td>
 											</tr>
 											<tr class="clickable">
-												<td>01/01/2021</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														REQ-100002
-													</span>
+													01/01/2021
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														นพดล หมื่นศรี
-													</span>
-													 <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 220px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
+													REQ-100002
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														เครื่องคอมพิวเตอร์
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
 														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 p-1">รอดำเนินการ</span></td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														สุชาติ แก้วประดิษฐ์ 
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
+													สุชาติ แก้วประดิษฐ์
 												</td>
 											</tr>
 											<tr class="clickable">
-												<td>01/01/2021</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														REQ-100003
-													</span>
+													01/01/2021
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														นพดล หมื่นศรี
-													</span>
-													 <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 220px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
+													REQ-100003
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														เครื่องคอมพิวเตอร์
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
 														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 p-1">รอดำเนินการ</span></td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														สุชาติ แก้วประดิษฐ์ 
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
+													สุชาติ แก้วประดิษฐ์
 												</td>
 											</tr>
 											<tr class="clickable">
-												<td>01/01/2021</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														REQ-100004
-													</span>
+													01/01/2021
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														นพดล หมื่นศรี
-													</span>
-													 <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 220px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
+													REQ-100004
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														เครื่องคอมพิวเตอร์
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
 														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 p-1">รอดำเนินการ</span></td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														สุชาติ แก้วประดิษฐ์ 
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
+													สุชาติ แก้วประดิษฐ์
 												</td>
 											</tr>
 											<tr class="clickable">
-												<td>01/01/2021</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														REQ-100005
-													</span>
+													01/01/2021
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														นพดล หมื่นศรี
-													</span>
-													 <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 220px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
+													REQ-100001
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														เครื่องคอมพิวเตอร์
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
 														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 p-1">รอดำเนินการ</span></td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														สุชาติ แก้วประดิษฐ์ 
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
+													สุชาติ แก้วประดิษฐ์
 												</td>
 											</tr>
 											<tr class="clickable">
-												<td>01/01/2021</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														REQ-100006
-													</span>
+													01/01/2021
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														นพดล หมื่นศรี
-													</span>
-													 <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 220px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
+													REQ-100001
 												</td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														เครื่องคอมพิวเตอร์
-													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
 														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 p-1">รอดำเนินการ</span></td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
 												<td>
-													<span class="d-inline-block text-truncate" style="max-width: 150px;">
-														สุชาติ แก้วประดิษฐ์ 
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100002
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
 													</span>
-													<br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
+												</td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100003
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
 													</span>
+												</td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100004
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100001
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100001
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100002
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100003
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100004
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100001
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100002
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100003
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100004
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr><tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100001
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100002
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100003
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100004
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr><tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100001
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100002
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100003
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100004
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr><tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100001
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100002
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100003
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100004
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr><tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100001
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100002
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100003
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
+												</td>
+											</tr>
+											<tr class="clickable">
+												<td>
+													01/01/2021
+												</td>
+												<td>
+													REQ-100004
+												</td>
+												<td>
+													นพดล หมื่นศรี
+												</td>
+												<td>
+													<span class="d-inline-block text-truncate" style="max-width: 200px;">
+														ปัญหาเกี่ยวกับการใช้ระบบเครือข่าย
+													</span>
+												</td>
+												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
+												<td>
+													สุชาติ แก้วประดิษฐ์
 												</td>
 											</tr>
 										</tbody>
 									</table>
-								</div>
+									
 							</div>
 							</div>
 						</div>
@@ -311,5 +824,6 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
+	<script src="app/script/table.js"></script>
 </body>
 </html>
