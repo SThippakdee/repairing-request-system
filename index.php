@@ -37,16 +37,16 @@
                             <div class="card o-hidden border-0 shadow-lg mb-0">
                                 <div class="card-body p-0">
                                     <div class="row">
-                                        <div class="col-lg-6 d-none d-lg-block p-0">
+                                        <div class="col-lg-6 d-none d-lg-block p-0 h-100">
                                             <div class="d-table h-100">
                                                 <div class="d-table-cell align-middle">
-                                                    <img class="img-fluid h-100" src="img/pics/login-cover-pic.jpg">
+                                                    <img class="img-fluid" src="img/pics/login-cover-pic.jpg">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="p-4 my-5">
-                                                <div class="text-center mb-5">
+                                        <div class="col-lg-6 h-100">
+                                            <div class="p-4 my-4">
+                                                <div class="text-center mb-4 mt-3">
                                                     <a class="h1 text-gray-900 text-decoration-none" style="font-family:Fredoka One">
                                                         Reparing Request
                                                     </a>
@@ -71,7 +71,7 @@
                                                             <label class="form-check-label small ms-1" for="remember">จดจำบัญชีผู้ใช้</label>
                                                         </div>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary btn-user btn-block shadow mb-2 mt-4">
+                                                    <button type="submit" class="btn btn-primary btn-user btn-block shadow mb-2 mt-5">
                                                         <span class="h6 text-light">เข้าสู่ระบบ</span>
                                                         <i class="fa-solid fa-lg fa-arrow-right-to-bracket ms-2"></i>
                                                     </button>

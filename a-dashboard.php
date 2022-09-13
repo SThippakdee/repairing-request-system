@@ -199,6 +199,7 @@
 							<div class="card h-100 shadow-lg">
 							<div class="card-body">
 								<h5 class="card-title">รายการแจ้งซ่อมล่าสุด</h5>
+									<div class="table-responsive">
 									<table class="table table-hover my-0 mt-4">
 										<thead>
 											<tr>
@@ -328,6 +329,7 @@
 											</tr>
 										</tbody>
 									</table>
+									</div>
 								</div>
 							</div>
 						</div>
