@@ -1,14 +1,5 @@
 <?php
-    //Check login session & userlevel
-    if(session_status()==PHP_SESSION_NONE) session_start();
-    if(!isset($_SESSION["RWeb-userID"]) or !isset($_SESSION["RWeb-userLevel"])){
-        header("Location: index.php");
-        exit();
-    }
-    if($_SESSION["RWeb-userLevel"] != "1"){
-        header("Location: index.php");
-        exit();
-	}
+    require_once("app/script/a-header.php");
 ?>
 
 <!DOCTYPE html>
@@ -85,11 +76,11 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">ทะเบียนอุปกรณ์</h5>
+														<h5 class="card-title">ผลการประเมิน</h5>
 													</div>
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="fa-solid fa-lg fa-computer align-middle"></i>
+															<i class="fa-solid fa-lg fa-file-circle-check align-middle"></i>
 														</div>
 													</div>
 												</div>
@@ -123,7 +114,7 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">ผลการประเมิน</h5>
+														<h5 class="card-title">คะแนนประเมินเฉลี่ย</h5>
 													</div>
 													<div class="col-auto">
 														<div class="stat text-primary">

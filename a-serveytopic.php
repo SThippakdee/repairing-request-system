@@ -21,6 +21,7 @@
 	<script src="asset/vendors/jquery-3.6.0/jquery-3.6.0.min.js"></script>
     <script src="asset/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 	
+
 	<!-- Page Style -->
 	<STYLE type="text/css">
 		body {
@@ -41,13 +42,13 @@
 			<main class="content" style="background-color: #EBEBEB;">
 				<div class="container-fluid p-0">
 					<!--Start Content-->
-					<h3 id="pageName" class="fw-bold mb-3">ข้อมูลประเภทครุภัณฑ์</h3>
+					<h3 id="pageName" class="fw-bold mb-3">ข้อมูลการประเมินบริการ</h3>
 
 					<div class="row row-cols-1 g-4">
 						<div class="col">
 							<div class="card h-100 shadow-lg">
 							<div class="card-body">
-
+								
 								<a class="btn btn-lg btn-primary mt-2" onclick="add()">
 									<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
 									เพิ่มรายการใหม่
@@ -55,13 +56,13 @@
 								<table class="table table-hover mt-4 mb-0">
 									<thead>
 										<tr>
-											<th class="h4">ชื่อประเภทครุภัณฑ์</th>
+											<th class="h4">หัวข้อการประเมิน</th>
 											<th width="135"></th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php
-										$sql = "SELECT * FROM device_type ORDER BY type_name;";
+										$sql = "SELECT * FROM servey_topic WHERE top_id <> 1 ORDER BY top_name;";
 										$result=$repairDB->query($sql);
 
 										if ($result->num_rows == 0){
@@ -71,19 +72,19 @@
 										?>
 										<tr>
 											<td>
-												<?php echo $row['type_name'];?>
+												<?php echo $row['top_name'];?>
 											</td>
 											<td class="text-end">
 												<div class="row g-1 p-0">
 													<div class="col">
-														<button type="button" class="btn btn-primary w-100" 
-															onclick="edit(<?php printf('%d, \'%s\'', $row['type_id'], $row['type_name']);?>)">
+														<button type="button" class="btn btn-primary w-100"
+															onclick="edit(<?php printf('%d, \'%s\'', $row['top_id'], $row['top_name']);?>)">
 															<i class="fa-solid fa-pen-to-square"></i>
 														</button>
 													</div>
 													<div class="col">
 														<button type="button" class="btn btn-warning w-100"
-															onclick="del(<?php echo $row['type_id'];?>)">
+															onclick="del(<?php echo $row['top_id'];?>)">
 															<i class="fa-solid fa-lg fa-trash-can"></i>
 														</button>
 													</div>
@@ -100,7 +101,8 @@
 							</div>
 						</div>
 					</div>
-					<!--End Content-->	
+					<!--End Content-->
+					
 				</div>
 			</main>
 			<!--Footer-->
@@ -110,6 +112,6 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
-	<script src="app/script/devicetype-manage.js"></script>
+	<script src="app/script/serveytopic-manage.js"></script>
 </body>
 </html>

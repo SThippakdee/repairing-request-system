@@ -1,14 +1,5 @@
 <?php
-    //Check login session & userlevel
-    if(session_status()==PHP_SESSION_NONE) session_start();
-    if(!isset($_SESSION["RWeb-userID"]) or !isset($_SESSION["RWeb-userLevel"])){
-        header("Location: index.php");
-        exit();
-    }
-    if($_SESSION["RWeb-userLevel"] != "1"){
-        header("Location: index.php");
-        exit();
-	}
+    require_once("app/script/a-header.php");
 ?>
 
 <!DOCTYPE html>
@@ -71,10 +62,16 @@
 									<div class="col-12 col-lg-6">
 										<div class="row g-2">
 											<div class="col-6">
-												<a class="btn btn-lg btn-primary w-100"><i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>เพิ่มรายการ</a>
+												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="a-request-new.php">
+													<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
+													เพิ่มรายการ
+												</a>
 											</div>
 											<div class="col-6">
-												<a id="print" class="btn btn-lg btn-primary w-100"><i class="fa-solid fa-print fa-lg me-2"></i>พิมพ์รายการ</a>
+												<a id="print" class="btn btn-lg btn-primary w-100 text-nowrap">
+													<i class="fa-solid fa-print fa-lg me-2"></i>
+													พิมพ์รายการ
+												</a>
 											</div>
 										</div>
 									</div>
@@ -84,7 +81,7 @@
 									<hr>
 								</div>
 
-									<table id="table" class="table table-hover table-striped mt-2 display nowrap" style="width:100%">
+									<table id="table" class="table table-hover mt-2 display nowrap" style="width:100%">
 										<thead>
 											<tr>
 												<th colspan="6" class="h5 px-0">

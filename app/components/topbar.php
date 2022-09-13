@@ -1,4 +1,4 @@
-
+			
 			<nav class="navbar navbar-expand navbar-light navbar-bg shadow-lg">
 				<a class="sidebar-toggle js-sidebar-toggle">
           			<i class="hamburger align-self-center"></i>
@@ -7,8 +7,10 @@
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                				<img src="img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle me-1"/>
-								<span class="text-dark d-none d-sm-inline-block">Name Lastname</span>
+                				<img src="<?php echo("img/avatars/".$row["user_profile"]);?>" class="avatar img-fluid rounded-circle me-1"/>
+								<span class="text-dark d-none d-sm-inline-block">
+									<?php printf("%s %s", $row['user_name'], $row['user_lastname']);?>
+								</span>
               				</a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="profile.php"><i class="fa-solid fa-user-large me-1"></i>บัญชีผู้ใช้</a>

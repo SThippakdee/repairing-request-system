@@ -7,7 +7,7 @@ var table = $('#table').DataTable({
     buttons: [
         {
             extend: 'print',
-            text: 'พิมพ์รายการแจ้งซ่อม'
+            text: 'พิมพ์'
         }
     ]
 });

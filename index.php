@@ -52,19 +52,22 @@
                                                     </a>
                                                 </div>
                                                 <br>
+
                                                 <form class="user" action="be-checkLogin.php" method="POST">
                                                     <div class="form-group">
                                                         <input type="text" class="form-control form-control-user" name="username"
-                                                        required autofocus autocomplete="off" placeholder="Username">
+                                                        required autofocus autocomplete="off" placeholder="Username"
+                                                        value="<?php if(isset($_COOKIE["RWeb-userName"])) echo $_COOKIE["RWeb-userName"];?>">
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="password" class="form-control form-control-user" name="password" 
-                                                        required placeholder="Password">
+                                                        required autocomplete="off" placeholder="Password"
+                                                        value="<?php if(isset($_COOKIE["RWeb-token"])) echo $_COOKIE["RWeb-token"];?>">
                                                     </div>
-
                                                     <div class="form-group ms-2">
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="form-check-input" name="remember">
+                                                            <input type="checkbox" class="form-check-input" name="remember"
+                                                            <?php if(isset($_COOKIE["RWeb-userName"])) echo "checked";?>>
                                                             <label class="form-check-label small ms-1" for="remember">จดจำบัญชีผู้ใช้</label>
                                                         </div>
                                                     </div>
@@ -116,10 +119,11 @@
                     })  
                 }
                 else{
+                    var msg = data.split("|");
                     Swal.fire({
                         icon: 'error',
                         title: 'เข้าสู่ระบบล้มเหลว',
-                        text: data,
+                        text: msg[1],
                         showConfirmButton: false
                     })
                 }

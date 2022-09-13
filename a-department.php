@@ -1,14 +1,5 @@
 <?php
-    //Check login session & userlevel
-    if(session_status()==PHP_SESSION_NONE) session_start();
-    if(!isset($_SESSION["RWeb-userID"]) or !isset($_SESSION["RWeb-userLevel"])){
-        header("Location: index.php");
-        exit();
-    }
-    if($_SESSION["RWeb-userLevel"] != "1"){
-        header("Location: index.php");
-        exit();
-	}
+    require_once("app/script/a-header.php");
 ?>
 
 <!DOCTYPE html>
@@ -29,8 +20,6 @@
 	<script src="asset/js/app.js"></script>
 	<script src="asset/vendors/jquery-3.6.0/jquery-3.6.0.min.js"></script>
     <script src="asset/vendors/sweetalert2/sweetalert2.all.min.js"></script>
-	<script src="asset/vendors/chartjs/Chart.min.js"></script>
-	
 
 	<!-- Page Style -->
 	<STYLE type="text/css">
@@ -58,7 +47,11 @@
 						<div class="col">
 							<div class="card h-100 shadow-lg">
 							<div class="card-body">
-								<a class="btn btn-lg btn-primary mt-2"><i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>เพิ่มรายการใหม่</a>
+								
+								<a class="btn btn-lg btn-primary mt-2" onclick="add()">
+									<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
+									เพิ่มรายการใหม่
+								</a>
 								<table class="table table-hover mt-4 mb-0">
 									<thead>
 										<tr>
@@ -67,63 +60,40 @@
 										</tr>
 									</thead>
 									<tbody>
+										<?php
+										$sql = "SELECT * FROM user_dep ORDER BY dep_name;";
+										$result=$repairDB->query($sql);
+
+										if ($result->num_rows == 0){
+											echo('<tr height=60px><td colspan="2" class="text-center">--- No record found ---</td></tr>');
+										}else{
+											while($row = $result->fetch_assoc()){
+										?>
 										<tr>
 											<td>
-												กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
+												<?php echo $row['dep_name'];?>
 											</td>
 											<td class="text-end">
 												<div class="row g-1 p-0">
 													<div class="col">
-														<button type="button" class="btn btn-primary w-100">
+														<button type="button" class="btn btn-primary w-100" 
+															onclick="edit(<?php printf('%d, \'%s\'', $row['dep_id'], $row['dep_name']);?>)">
 															<i class="fa-solid fa-pen-to-square"></i>
 														</button>
 													</div>
 													<div class="col">
-														<button type="button" class="btn btn-warning w-100">
+														<button type="button" class="btn btn-warning w-100"
+															onclick="del(<?php echo $row['dep_id'];?>)">
 															<i class="fa-solid fa-lg fa-trash-can"></i>
 														</button>
 													</div>
 												</div>
 											</td>
-										</tr>
-										<tr>
-											<td>
-												กลุ่มงานการพยาบาลสุขภาพจิตและจิตเวชชุมชน
-											</td>
-											<td class="text-end">
-												<div class="row g-1 p-0">
-													<div class="col">
-														<button type="button" class="btn btn-primary w-100">
-															<i class="fa-solid fa-pen-to-square"></i>
-														</button>
-													</div>
-													<div class="col">
-														<button type="button" class="btn btn-warning w-100">
-															<i class="fa-solid fa-lg fa-trash-can"></i>
-														</button>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												ผู้อำนวยการสถาบันฯ
-											</td>
-											<td class="text-end">
-												<div class="row g-1 p-0">
-													<div class="col">
-														<button type="button" class="btn btn-primary w-100">
-															<i class="fa-solid fa-pen-to-square"></i>
-														</button>
-													</div>
-													<div class="col">
-														<button type="button" class="btn btn-warning w-100">
-															<i class="fa-solid fa-lg fa-trash-can"></i>
-														</button>
-													</div>
-												</div>
-											</td>
-										</tr>
+										</tr>	
+										<?php
+											}
+										}
+										?>
 									</tbody>
 								</table>
 							</div>
@@ -136,10 +106,10 @@
 			</main>
 			<!--Footer-->
 			<?php require_once("app/components/footer.php");?>
-			
 		</div>
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
+	<script src="app/script/department-manage.js"></script>
 </body>
 </html>
