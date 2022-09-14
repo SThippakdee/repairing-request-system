@@ -26,6 +26,21 @@
 		body {
 			font-family: "Kanit"; 
 		}
+		.card-profile-img {
+			position: relative;
+			max-width: 8rem;
+			margin-top: -6rem;
+			margin-bottom: 1rem;
+			border: 3px solid #fff;
+			border-radius: 100%;
+			box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+			z-index: 2;
+		}
+		.card-profile .card-header {
+			height: 9rem;
+			background-position: center center;
+			background-size: cover;
+		}
 	</STYLE>
 </head>
 
@@ -113,3 +128,4 @@
 	<script src="app/script/department-manage.js"></script>
 </body>
 </html>
+<?php $repairDB->close(); ?>

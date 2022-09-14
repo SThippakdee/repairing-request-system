@@ -26,6 +26,21 @@
 		body {
 			font-family: "Kanit"; 
 		}
+		.card-profile-img {
+			position: relative;
+			max-width: 8rem;
+			margin-top: -6rem;
+			margin-bottom: 1rem;
+			border: 3px solid #fff;
+			border-radius: 100%;
+			box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+			z-index: 2;
+		}
+		.card-profile .card-header {
+			height: 9rem;
+			background-position: center center;
+			background-size: cover;
+		}
 	</STYLE>
 </head>
 
@@ -54,6 +69,12 @@
                                                 <div class="col-12 mb-4">
                                                     <div class="rounded p-3 border border-2 shadow-lg">
                                                         ส่วนของผู้ใช้บริการ
+                                                        <?php
+                                                            $sql = sprintf("SELECT user_id, user_name, user_lastname, user_tel, dep_name FROM user U LEFT JOIN user_dep D 
+                                                                            ON U.dep_id = D.dep_id WHERE user_id = '%s'", $_SESSION['RWeb-userID']);
+                                                            $result=$repairDB->query($sql);
+                                                            $row=$result->fetch_assoc();
+                                                        ?>
                                                         <div class="mb-2 mt-4">
                                                             <div class="row">
                                                                 <div class="col-12 col-md-6 mb-2">
@@ -63,19 +84,19 @@
                                                                 </div>
                                                                 <div class="col-12 col-md-6 mb-2">
                                                                     <span class="h5">หน่วยงาน/แผนก</span>
-                                                                    <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุชื่อหน่วยงาน/แผนก"
-                                                                            value="" readonly/>
+                                                                    <input type="text" class="form-control form-control-lg" autocomplete="off"
+                                                                            value="<?php echo $row["dep_name"];?>" readonly/>
                                                                 </div>
                                                                 <div class="col-12 col-md-6 mb-2">
                                                                     <span class="h5">ชื่อผู้ขอรับบริการ</span>
-                                                                    <input type="hidden" name="user_id" value="">
+                                                                    <input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>">
                                                                     <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุชื่อ  นามสกุล"
-                                                                            value="" readonly/>
+                                                                            value="<?php echo $row["user_name"].' '.$row["user_lastname"];?>" readonly/>
                                                                 </div>
                                                                 <div class="col-12 col-md-6">
                                                                     <span class="h5">โทรศัพท์ผู้ขอรับบริการ</span>
                                                                     <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุหมายเลขโทรศัพท์"
-                                                                            value="" readonly/>
+                                                                            value="<?php echo $row["user_tel"];?>" readonly/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -187,3 +208,4 @@
     </script>
 </body>
 </html>
+<?php $repairDB->close(); ?>

@@ -6,18 +6,28 @@
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+							<a class="nav-link" href="#" data-bs-toggle="dropdown">
                 				<img src="<?php echo("img/avatars/".$row["user_profile"]);?>" class="avatar img-fluid rounded-circle me-1"/>
-								<span class="text-dark d-none d-sm-inline-block">
-									<?php printf("%s %s", $row['user_name'], $row['user_lastname']);?>
-								</span>
               				</a>
-							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="profile.php"><i class="fa-solid fa-user-large me-1"></i>บัญชีผู้ใช้</a>
-								<a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-1"></i>ตั้งค่า</a>
-								<a class="dropdown-item" href="#"><i class="fa-solid fa-circle-question me-1"></i>ช่วยเหลือ</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" onclick="logout()"><i class="fa fa-power-off me-2"></i>ออกจากระบบ</a>
+							<div class="dropdown-menu dropdown-menu-end p-0" style="width:250px;">
+								<div class="card card-profile shadow-lg mb-0 mt-0">
+									<div class="card-header text-center" style="background-image: url(img/pics/profile-bg.jpg);">
+										<img class="rounded-circle mt-3 border border-2 border-light" src="<?php echo("img/avatars/".$row["user_profile"]);?>" style="width:80px;">
+									</div>
+									<div class="card-body text-center p-2">
+										<h4 class="mb-3 mt-2"><?php echo($row["user_name"]."  ".$row["user_lastname"]);?></h4>
+										<div class="row g-0 justify-content-center">
+											<a href="profile.php" class="btn btn-primary w-100 h5">
+												<i class="fa-solid fa-gear me-2 ms-1"></i>
+												ตั้งค่าบัญชีผู้ใช้
+											</a>
+											<a class="btn btn-primary w-100 h5" onclick="logout()">
+												<i class="fa-solid fa-power-off me-2"></i>
+												ออกจากระบบ
+											</a>
+										</div>
+									</div>
+								</div>
 							</div>
 						</li>
 					</ul>
