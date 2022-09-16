@@ -33,7 +33,8 @@
 		}
 		.card-profile-img {
 			position: relative;
-			max-width: 8rem;
+			width: 8rem;
+			height: 8rem;
 			margin-top: -6rem;
 			margin-bottom: 1rem;
 			border: 3px solid #fff;
@@ -97,480 +98,93 @@
 									<hr>
 								</div>
 
-								<table id="table" class="table table-hover mt-2 display nowrap" style="width:100%">
+									<?php
+										$sql = 'SELECT 	(select count(*) FROM user WHERE user_level <> 1) as total, 
+														(select count(*) FROM user WHERE user_level = 2 ) as officerCount,
+														(select count(*) FROM user WHERE user_level = 3 ) as userCount';
+										$result=$repairDB->query($sql);
+										$row=$result->fetch_assoc();
+									?>
+
+								<table id="table" class="table table-hover mt-2 display nowrap w-100">
 									<thead>
 										<tr>
 											<th colspan="6" class="h5 px-0">
 												<span class="badge bg-secondary py-1">
 													รายการทั้งหมด
 													<span class="badge bg-light text-dark ms-2 p-1">
-														200
+														<?php echo $row["total"];?>
 													</span>
 												</span>
 												<span class="badge bg-info py-1">
 													ผู้ใช้ระบบ
 													<span class="badge bg-light text-dark ms-2 p-1">
-														200
+														<?php echo $row["userCount"];?>
 													</span>
 												</span>
 												<span class="badge bg-primary py-1">
 													ช่างซ่อมบำรุง
 													<span class="badge bg-light text-dark ms-2 p-1">
-														200
+														<?php echo $row["officerCount"];?>
 													</span>
 												</span>
 											</th>
 										</tr>
 										<tr>
 											<th width="80"></th>
-											<th width="200">ชื่อ สกุล</th>
-											<th width="180">บัญชีผู้ใช้</th>
-											<th width="107">โทรศัพท์</th>
-											<th width="200">หน่วยงาน/แผนก</th>
-											<th width="140">สิทธิการใช้งาน</th>
+											<th>ชื่อ สกุล</th>
+											<th>บัญชีผู้ใช้</th>
+											<th>โทรศัพท์</th>
+											<th>หน่วยงาน/แผนก</th>
+											<th>สิทธิการใช้งาน</th>
 										</tr>
 									</thead>
 									<tbody>
+
+										<?php
+											$sql="	SELECT 	US.user_id, user_profile, user_name, user_lastname, user_username, user_tel, dep_name, US.user_level, level_name 
+													FROM 	user US 
+															LEFT JOIN user_dep DE ON US.dep_id = DE.dep_id 
+															LEFT JOIN user_level LV ON US.user_level = LV.level_id
+													WHERE	user_level <> 1";
+											$userData=$repairDB->query($sql);
+
+											while($user = $userData->fetch_assoc()){
+												$userID = $user["user_id"];
+										?>
+
 										<tr class="clickable">
 											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
+												<img src='img/avatars/<?php echo $user["user_profile"];?>' class="rounded-circle" width="45"/>
 											</td>
 											<td>
-												นพดล หมื่นศรี
+												<?php echo $user["user_name"]."  ".$user["user_lastname"];?>
 											</td>
 											<td>
-												noppadol@user
+												<?php echo $user["user_username"];?>
 											</td>
 											<td>
-												0888888888
+												<?php echo $user["user_tel"];?>
 											</td>
 											<td>
 												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
+													<?php echo $user["dep_name"];?>
 												</span>
 											</td>
 											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
+												<?php
+													$color = "";
+													if($user["user_level"] == 2) $color = "bg-primary";
+													else if($user["user_level"] == 3) $color = "bg-info";
+												?>
+												<span class="badge <?php echo $color;?> w-100 py-1">
+													<?php echo $user["level_name"];?>
 												</span>
 											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
 										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
-										<tr class="clickable">
-											<td class="text-center">
-												<img src="img/avatars/avatar-3.jpg" class="avatar rounded-circle"/>
-											</td>
-											<td>
-												นพดล หมื่นศรี
-											</td>
-											<td>
-												noppadol@user
-											</td>
-											<td>
-												0888888888
-											</td>
-											<td>
-												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิเทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-												</span>
-											</td>
-											<td>
-												<span class="badge bg-info w-100 py-1">ผู้ใช้ระบบ</span>
-											</td>
-										</tr>
+
+										<?php } ?>
+
 									</tbody>
 								</table>
 
@@ -592,4 +206,4 @@
 	<script src="app/script/table.js"></script>
 </body>
 </html>
-<?php $repairDB->close(); ?>
+<?php $repairDB->close();?>

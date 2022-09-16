@@ -14,7 +14,7 @@
             if($stmt->execute()){
                 echo "success";
             }else{
-                die("alert|ไม่สามารถเพิ่มรายการได้ :". $conn->error);
+                die("alert|ไม่สามารถเพิ่มรายการได้ :". $repairDB->error);
             }
         }
 
@@ -27,7 +27,7 @@
             if($stmt->execute()){
                 echo "success";
             }else{
-                die("alert|ไม่สามารถแก้ไขรายการได้ :". $conn->error);
+                die("alert|ไม่สามารถแก้ไขรายการได้ :". $repairDB->error);
             }
         }
 
@@ -40,7 +40,7 @@
             if($stmt->execute()){
                 echo "success";
             }else{
-                die("alert|ไม่สามารถลบรายการได้ :". $conn->error);
+                die("alert|ไม่สามารถลบรายการได้ :". $repairDB->error);
             }
         }
     }

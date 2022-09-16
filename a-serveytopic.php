@@ -29,7 +29,8 @@
 		}
 		.card-profile-img {
 			position: relative;
-			max-width: 8rem;
+			width: 8rem;
+			height: 8rem;
 			margin-top: -6rem;
 			margin-bottom: 1rem;
 			border: 3px solid #fff;
@@ -71,7 +72,7 @@
 								<table class="table table-hover mt-4 mb-0">
 									<thead>
 										<tr>
-											<th class="h4">หัวข้อการประเมิน</th>
+											<th>หัวข้อการประเมิน</th>
 											<th width="135"></th>
 										</tr>
 									</thead>

@@ -28,7 +28,8 @@
 		}
 		.card-profile-img {
 			position: relative;
-			max-width: 8rem;
+			width: 8rem;
+			height: 8rem;
 			margin-top: -6rem;
 			margin-bottom: 1rem;
 			border: 3px solid #fff;
@@ -70,23 +71,29 @@
 								<table class="table table-hover mt-4 mb-0">
 									<thead>
 										<tr>
-											<th class="h4">ชื่อเรื่องที่ขอบริการ</th>
+											<th>ชื่อเรื่องที่ขอบริการ</th>
+											<th class="d-none d-md-table-cell" width="200">จำนวนรายการแจ้งซ่อม</th>
 											<th width="135"></th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php
-										$sql = "SELECT * FROM service ORDER BY service_name;";
+										$sql = "SELECT *, (select count(*) from request WHERE service_id = service.service_id) as request_count
+												FROM service 
+												ORDER BY service_name;";
 										$result=$repairDB->query($sql);
 
 										if ($result->num_rows == 0){
-											echo('<tr height=60px><td colspan="2" class="text-center">--- No record found ---</td></tr>');
+											echo('<tr height=60px><td colspan="3" class="text-center">--- No record found ---</td></tr>');
 										}else{
 											while($row = $result->fetch_assoc()){
 										?>
 										<tr>
 											<td>
 												<?php echo $row['service_name'];?>
+											</td>
+											<td class="d-none d-md-table-cell">
+												<?php echo $row['request_count'];?> รายการ
 											</td>
 											<td class="text-end">
 												<div class="row g-1 p-0">

@@ -28,7 +28,8 @@
 		}
 		.card-profile-img {
 			position: relative;
-			max-width: 8rem;
+			width: 8rem;
+			height: 8rem;
 			margin-top: -6rem;
 			margin-bottom: 1rem;
 			border: 3px solid #fff;
@@ -70,23 +71,29 @@
 								<table class="table table-hover mt-4 mb-0">
 									<thead>
 										<tr>
-											<th class="h4">ชื่อหน่วยงาน/แผนก</th>
+											<th>ชื่อหน่วยงาน/แผนก</th>
+											<th class="d-none d-md-table-cell" width="200">จำนวนบัญชีผู้ใช้</th>
 											<th width="135"></th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php
-										$sql = "SELECT * FROM user_dep ORDER BY dep_name;";
+										$sql = "SELECT *, (select count(*) from user WHERE dep_id = user_dep.dep_id) as user_count
+												FROM user_dep 
+												ORDER BY dep_name;";
 										$result=$repairDB->query($sql);
 
 										if ($result->num_rows == 0){
-											echo('<tr height=60px><td colspan="2" class="text-center">--- No record found ---</td></tr>');
+											echo('<tr height=60px><td colspan="3" class="text-center">--- No record found ---</td></tr>');
 										}else{
 											while($row = $result->fetch_assoc()){
 										?>
 										<tr>
 											<td>
 												<?php echo $row['dep_name'];?>
+											</td>
+											<td class="d-none d-md-table-cell">
+												<?php echo $row['user_count'];?> บัญชี
 											</td>
 											<td class="text-end">
 												<div class="row g-1 p-0">

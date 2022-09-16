@@ -13,22 +13,28 @@
 
 	<!-- Include fonts/css/js -->
 	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
-	
+
+	<link href="asset/vendors/select2/select2.min.css" rel="stylesheet">
 	<link href="asset/css/app.css" rel="stylesheet">
 	<link href="asset/vendors/fontawesome-6.1.2/css/all.min.css" rel="stylesheet">
 	
 	<script src="asset/js/app.js"></script>
 	<script src="asset/vendors/jquery-3.6.0/jquery-3.6.0.min.js"></script>
     <script src="asset/vendors/sweetalert2/sweetalert2.all.min.js"></script>
+	<script src="asset/vendors/select2/select2.min.js"></script>
 	
 	<!-- Page Style -->
 	<STYLE type="text/css">
 		body {
 			font-family: "Kanit"; 
 		}
+        .select2 {
+            width:100%!important;
+        }
 		.card-profile-img {
 			position: relative;
-			max-width: 8rem;
+			width: 8rem;
+			height: 8rem;
 			margin-top: -6rem;
 			margin-bottom: 1rem;
 			border: 3px solid #fff;
@@ -63,76 +69,107 @@
 							<div class="card h-100">
 						        <div class="card-body">
                                         
-                                        <h4 class="text-center mt-5 mb-4 fw-bold"> แบบบันทึกการขอใช้บริการงานซ่อม <h4>
+                                        <h4 class="text-center mt-5 mb-4 fw-bold"> แบบบันทึกการขอใช้บริการงานซ่อม </h4>
                                         <form action="be-request-new.php" method="POST">
                                             <div class="row p-2">
                                                 <div class="col-12 mb-4">
-                                                    <div class="rounded p-3 border border-2 shadow-lg">
-                                                        ส่วนของผู้ใช้บริการ
-                                                        <?php
-                                                            $sql = sprintf("SELECT user_id, user_name, user_lastname, user_tel, dep_name FROM user U LEFT JOIN user_dep D 
-                                                                            ON U.dep_id = D.dep_id WHERE user_id = '%s'", $_SESSION['RWeb-userID']);
-                                                            $result=$repairDB->query($sql);
-                                                            $row=$result->fetch_assoc();
-                                                        ?>
-                                                        <div class="mb-2 mt-4">
-                                                            <div class="row">
-                                                                <div class="col-12 col-md-6 mb-2">
-                                                                    <span class="h5">วันที่ขอรับบริการ</span>
-                                                                    <input type="date" name="req_date" class="form-control form-control-lg"
-                                                                            value="<?php echo date('Y-m-d');?>" readonly/>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 mb-2">
-                                                                    <span class="h5">หน่วยงาน/แผนก</span>
-                                                                    <input type="text" class="form-control form-control-lg" autocomplete="off"
-                                                                            value="<?php echo $row["dep_name"];?>" readonly/>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 mb-2">
-                                                                    <span class="h5">ชื่อผู้ขอรับบริการ</span>
-                                                                    <input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>">
-                                                                    <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุชื่อ  นามสกุล"
-                                                                            value="<?php echo $row["user_name"].' '.$row["user_lastname"];?>" readonly/>
-                                                                </div>
-                                                                <div class="col-12 col-md-6">
-                                                                    <span class="h5">โทรศัพท์ผู้ขอรับบริการ</span>
-                                                                    <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุหมายเลขโทรศัพท์"
-                                                                            value="<?php echo $row["user_tel"];?>" readonly/>
+                                                    <div class="card h-100 shadow-lg border border-2">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">ส่วนของผู้ใช้บริการ</h5>
+                                                            <?php
+                                                                $sql = sprintf("SELECT user_id, user_name, user_lastname, user_tel, dep_name FROM user U LEFT JOIN user_dep D 
+                                                                                ON U.dep_id = D.dep_id WHERE user_id = '%s'", $_SESSION['RWeb-userID']);
+                                                                $result=$repairDB->query($sql);
+                                                                $row=$result->fetch_assoc();
+                                                            ?>
+                                                            <div class="mb-2 mt-4">
+                                                                <div class="row">
+                                                                    <div class="col-12 col-md-6 mb-2">
+                                                                        วันที่ขอรับบริการ
+                                                                        <input type="date" name="req_date" class="form-control form-control-lg"
+                                                                                value="<?php echo date('Y-m-d');?>" readonly/>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-6 mb-2">
+                                                                        หน่วยงาน/แผนก
+                                                                        <input type="text" class="form-control form-control-lg" autocomplete="off"
+                                                                                value="<?php echo $row["dep_name"];?>" placeholder="" readonly/>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-6 mb-2">
+                                                                        ชื่อผู้ขอรับบริการ
+                                                                        <input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>">
+                                                                        <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุชื่อ  นามสกุล"
+                                                                                value="<?php echo $row["user_name"].' '.$row["user_lastname"];?>" readonly/>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-6">
+                                                                        โทรศัพท์ผู้ขอรับบริการ
+                                                                        <input type="text" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุหมายเลขโทรศัพท์"
+                                                                                value="<?php echo $row["user_tel"];?>" readonly/>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
-                                                    <div class="rounded p-3 border border-2 shadow-lg">
-                                                        ส่วนของรายละเอียดการขอบริการ
-                                                        <div class="mb-2 mt-4">
-                                                            <div class="row">
-                                                                <div class="col-12 mb-2">
-                                                                    <span class="h5">เรื่องที่ขอบริการ</span>
-                                                                    <select id="service" name="service_id" class="form-select form-control-lg">
-                                                                        <option selected disabled>-- เลือกบริการ --</option>
-                                                                        <option value="1">One</option>
-                                                                        <option value="2">Two</option>
-                                                                        <option value="3">Three</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 mb-2">
-                                                                    <span class="h5">ประเภทครุภัณฑ์</span>
-                                                                    <select id="deviceType" name="type_id" class="form-select form-control-lg">
-                                                                        <option selected disabled>-- เลือกประเภทครุภัณฑ์ --</option>
-                                                                        <option value="1">One</option>
-                                                                        <option value="2">Two</option>
-                                                                        <option value="3">Three</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-12 col-md-6 mb-2">
-                                                                    <span class="h5">หมายเลขครุภัณฑ์(ถ้ามี)</span>
-                                                                    <input type="text" name="tel" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุหมายเลขครุภัณฑ์"/>
-                                                                </div>
-                                                                <div class="col-12">
-                                                                    <span class="h5">รายละเอียดปัญหาที่พบ</span>
-                                                                    <textarea class="form-control" placeholder="ระบุรายละเอียดของปัญหาที่พบ" style="height: 100px"></textarea>  
+                                                    <div class="card h-100 shadow-lg border border-2">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">ส่วนของรายละเอียดการขอบริการ</h5>
+                                                            <div class="mb-2 mt-4">
+                                                                <div class="row">
+                                                                    <div class="col-12 mb-2">
+
+                                                                        <?php
+                                                                            $sql = sprintf("SELECT * FROM service ORDER BY service_name;");
+                                                                            $serviceResult=$repairDB->query($sql);
+                                                                        ?>
+
+                                                                        เรื่องที่ขอบริการ
+                                                                        <select id="service" name="service_id" class="form-select" required>
+                                                                            <option value="" disabled selected>-- เลือกเรื่องที่ขอบริการ --</option>
+
+                                                                            <?php
+                                                                                while ($service = $serviceResult->fetch_assoc()){
+                                                                            ?>
+
+                                                                            <option value="<?php echo $service['service_id'];?>"><?php echo $service['service_name'];?></option>
+                                                                            
+                                                                            <?php
+                                                                                }
+                                                                            ?>
+
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-6 mb-2">
+
+                                                                        <?php
+                                                                            $sql = sprintf("SELECT * FROM device_type ORDER BY type_name;");
+                                                                            $typeResult=$repairDB->query($sql);
+                                                                        ?>
+
+                                                                        ประเภทครุภัณฑ์
+                                                                        <select id="deviceType" name="type_id" class="form-select" required>
+                                                                            <option value="" disabled selected>-- เลือกประเภทครุภัณฑ์ --</option>
+
+                                                                            <?php
+                                                                                while ($type = $typeResult->fetch_assoc()){
+                                                                            ?>
+
+                                                                            <option value="<?php echo $type['type_id'];?>"><?php echo $type['type_name'];?></option>
+
+                                                                            <?php
+                                                                                }
+                                                                            ?>
+
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="col-12 col-md-6 mb-2">
+                                                                        หมายเลขครุภัณฑ์ (ถ้ามี)
+                                                                        <input type="text" name="dev_serial" class="form-control form-control-lg" autocomplete="off" placeholder="ระบุหมายเลขครุภัณฑ์"/>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        รายละเอียดปัญหาที่พบ
+                                                                        <textarea name="req_detail" class="form-control" placeholder="ระบุรายละเอียดของปัญหาที่พบ" style="height: 100px" required></textarea>  
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -206,6 +243,12 @@
             });
         });
     </script>
+    <script>
+		$(document).ready(function() {
+			$('#deviceType').select2();
+            $('#service').select2();
+		});
+	</script>
 </body>
 </html>
 <?php $repairDB->close(); ?>
