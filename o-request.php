@@ -1,5 +1,5 @@
 <?php
-    require_once("app/script/header-a.php");
+    require_once("app/script/header-o.php");
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +58,7 @@
 <body>
 	<div class="wrapper">
 		<!--Sidebar-->
-		<?php require_once("app/components/sidebar-admin.php");?>
+		<?php require_once("app/components/sidebar-officer.php");?>
 
 		<div class="main">
 			<!--Topbar-->
@@ -225,7 +225,7 @@
 
 	<script src="app/script/sidebar.js"></script>
 	<script src="app/script/table.js"></script>
-	<script src="app/script/request-manage.js"></script>
+	<script src="app/script/request-manage-o.js"></script>
 </body>
 </html>
 <?php $repairDB->close(); ?>

@@ -21,10 +21,16 @@
 							<span class="align-middle">บัญชีผู้ใช้</span>
             			</a>
 					</li>
+					<li class="sidebar-item" data-title="รายการแจ้งซ่อมทั้งหมด"> 
+						<a class="sidebar-link" href="a-request-all.php">
+							<i class="fa-solid fa-lg fa-screwdriver-wrench me-3"></i>
+							<span class="align-middle">รายการแจ้งซ่อมทั้งหมด</span>
+            			</a>
+					</li>
 					<li class="sidebar-item" data-title="รายการแจ้งซ่อม"> 
 						<a class="sidebar-link" href="a-request.php">
 							<i class="fa-solid fa-lg fa-screwdriver-wrench me-3"></i>
-							<span class="align-middle">รายการแจ้งซ่อม</span>
+							<span class="align-middle">รายการแจ้งซ่อมของฉัน</span>
             			</a>
 					</li>
 					<li class="sidebar-item" data-title="จัดการข้อมูลระบบ">
@@ -47,26 +53,6 @@
 							</a>
 							<a class="sidebar-link" href="a-serveyTopic.php" data-page="ข้อมูลการประเมินบริการ">
 								<span class="align-middle ms-2">ข้อมูลการประเมินบริการ</span>
-							</a>
-						</li>
-					</ul>
-					<li class="sidebar-item" data-title="รายงานการแจ้งซ่อม">
-						<a class="sidebar-link" data-bs-toggle="collapse" href="#submenu2">
-							<i class="fa-solid fa-lg fa-chart-pie"></i>
-							<span class="align-middle">รายงานการแจ้งซ่อม</span>
-							<i class="fa-solid fa-chevron-down float-end"></i>
-            			</a>
-					</li>
-					<ul class="sidebar-nav collapse" id="submenu2">
-						<li class="sidebar-link">
-							<a class="sidebar-link" href="#" data-page="#">
-								<span class="align-middle ms-2">รายงาน1</span>
-							</a>
-							<a class="sidebar-link" href="#" data-page="#">
-								<span class="align-middle ms-2">รายงาน2</span>
-							</a>
-							<a class="sidebar-link" href="#" data-page="#">
-								<span class="align-middle ms-2">รายงาน3</span>
 							</a>
 						</li>
 					</ul>

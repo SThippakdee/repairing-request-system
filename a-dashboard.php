@@ -1,5 +1,5 @@
 <?php
-    require_once("app/script/a-header.php");
+    require_once("app/script/header-a.php");
 ?>
 
 <!DOCTYPE html>
@@ -65,6 +65,16 @@
 					<h3 id="pageName" class="fw-bold mb-3">Dashboard</h3>
 
 					<div class="row">
+
+						<?php
+							$sql="SELECT 	(select count(*) FROM user WHERE user_level <> 1) as count_user,
+											(select count(*) FROM request_servey) as count_servey,
+											(select count(*) FROM request) as count_request,
+											(select avg(ser_average) FROM request_servey) as avg_servey";
+							$result=$repairDB->query($sql);
+							$row=$result->fetch_assoc();
+						?>
+
 						<div class="col-xl-6 col-xxl-5 d-flex">
 							<div class="w-100">
 								<div class="row">
@@ -83,7 +93,7 @@
 													</div>
 												</div>
 												<h1 class="mt-1 mb-4">
-													<span class="text-primary">53</span> บัญชี
+													<span class="text-primary"><?php echo $row["count_user"];?></span> บัญชี
 												</h1>
 												<hr class="mt-4 mb-2 text-center text-primary" style="height: 4px;">
 											</div>
@@ -101,7 +111,7 @@
 													</div>
 												</div>
 												<h1 class="mt-1 mb-4">
-													<span class="text-primary">241</span> รายการ
+													<span class="text-primary"><?php echo $row["count_servey"];?></span> รายการ
 												</h1>
 												<hr class="mt-4 mb-2 text-center text-primary" style="height: 4px;">
 											</div>
@@ -121,7 +131,7 @@
 													</div>
 												</div>
 												<h1 class="mt-1 mb-4">
-													<span class="text-primary">152</span> รายการ
+													<span class="text-primary"><?php echo $row["count_request"];?></span> รายการ
 												</h1>
 												<hr class="mt-4 mb-2 text-center text-primary" style="height: 4px;">
 											</div>
@@ -139,7 +149,7 @@
 													</div>
 												</div>
 												<h1 class="mt-1 mb-4">
-													<span class="text-primary">4.26</span>
+													<span class="text-primary"><?php echo $row["count_user"]!="" ? number_format($row["count_user"], 2) : "ยังไม่มีคะแนน" ;?></span>
 													<i class="fa-solid fa-star text-warning"></i>
 												</h1>
 												<hr class="mt-4 mb-2 text-center text-primary" style="height: 4px;">
@@ -150,11 +160,31 @@
 							</div>
 						</div>
 
+						<?php
+							$thisYear = date('Y');
+							$sql = "SELECT 	YEAR(`req_date`) AS `year`,
+											COUNT(IF(MONTH(`req_date`)=1,`req_id`,NULL)) AS `Jan`,
+											COUNT(IF(MONTH(`req_date`)=2,`req_id`,NULL)) AS `Feb`,
+											COUNT(IF(MONTH(`req_date`)=3,`req_id`,NULL)) AS `Mar`, 
+											COUNT(IF(MONTH(`req_date`)=4,`req_id`,NULL)) AS `Apr`, 
+											COUNT(IF(MONTH(`req_date`)=5,`req_id`,NULL)) AS `May`, 
+											COUNT(IF(MONTH(`req_date`)=6,`req_id`,NULL)) AS `Jun`, 
+											COUNT(IF(MONTH(`req_date`)=7,`req_id`,NULL)) AS `Jul`, 
+											COUNT(IF(MONTH(`req_date`)=8,`req_id`,NULL)) AS `Aug`, 
+											COUNT(IF(MONTH(`req_date`)=9,`req_id`,NULL)) AS `Sep`, 
+											COUNT(IF(MONTH(`req_date`)=10,`req_id`,NULL)) AS `Oct`, 
+											COUNT(IF(MONTH(`req_date`)=11,`req_id`,NULL)) AS `Nov`, 
+											COUNT(IF(MONTH(`req_date`)=12,`req_id`,NULL)) AS `Dec` 
+									FROM request
+									WHERE YEAR(`req_date`) = '$thisYear';";
+							$result=$repairDB->query($sql);
+							$line=$result->fetch_assoc();
+						?>
+
 						<div class="col-xl-6 col-xxl-7">
 							<div class="card flex-fill w-100 shadow-lg">
 								<div class="card-header">
-
-									<h5 class="card-title mb-0">สถิติการยื่นคำร้องขอแจ้งซ่อม</h5>
+									<h5 class="card-title mb-0">สถิติการยื่นคำร้องขอแจ้งซ่อม ปี <?php echo $thisYear;?></h5>
 								</div>
 								<div class="card-body py-3">
 									<div class="chart chart-sm">
@@ -164,6 +194,15 @@
 							</div>
 						</div>
 					</div>
+
+					<?php
+						$sql = 'SELECT 	(select count(*) FROM request WHERE req_status ="รอดำเนินการ" ) as waiting, 
+										(select count(*) FROM request WHERE req_status ="กำลังดำเนินการ" ) as inprogress,
+										(select count(*) FROM request WHERE req_status ="ดำเนินการเสร็จสิ้น" ) as done, 
+										(select count(*) FROM request WHERE req_status ="ยกเลิกรายการ" ) as cancelled;';
+						$result=$repairDB->query($sql);
+						$pie=$result->fetch_assoc();
+					?>
 
 					<div class="row g-4 mb-4">
 						<div class="col-xl-12 col-xxl-4">
@@ -189,19 +228,19 @@
 												<tbody>
 													<tr>
 														<td>รอดำเนินการ</td>
-														<td class="text-end text-warning fw-bold h4">260</td>
+														<td class="text-end text-warning fw-bold h4"><?php echo $pie["waiting"];?></td>
 													</tr>
 													<tr>
 														<td>กำลังดำเนินการ</td>
-														<td class="text-end text-primary fw-bold h4">125</td>
+														<td class="text-end text-primary fw-bold h4"><?php echo $pie["inprogress"];?></td>
 													</tr>
 													<tr>
 														<td>ดำเนินการเสร็จสิ้น</td>
-														<td class="text-end text-success fw-bold h4">246</td>
+														<td class="text-end text-success fw-bold h4"><?php echo $pie["done"];?></td>
 													</tr>
 													<tr>
 														<td>ยกเลิกรายการ</td>
-														<td class="text-end text-danger fw-bold h4">54</td>
+														<td class="text-end text-danger fw-bold h4"><?php echo $pie["cancelled"];?></td>
 													</tr>
 												</tbody>
 											</table>
@@ -211,6 +250,7 @@
 							</div>
 							</div>
 						</div>
+
 						<div class="col-xl-12 col-xxl-8">
 							<div class="card h-100 shadow-lg">
 							<div class="card-body">
@@ -226,123 +266,56 @@
 											</tr>
 										</thead>
 										<tbody>
-											<tr class="clickable">
-												<td>01/01/2021</td>
+
+											<?php
+												$sql="	SELECT 	req_date, RQ.req_id, user_name, user_lastname, dep_name, service_name, req_status, officer_id, 
+																(select CONCAT(user_name, ' ', user_lastname) FROM user WHERE user_id = officer_id)as officer_name 
+														FROM 	request RQ 
+														LEFT JOIN user US ON RQ.user_id = US.user_id
+														LEFT JOIN user_dep DP ON US.dep_id = DP.dep_id 
+														LEFT JOIN service SV ON RQ.service_id = SV.service_id 
+														LEFT JOIN device_type DT ON RQ.type_id = DT.type_id 
+														LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id
+														ORDER BY req_date DESC LIMIT 7;";
+												$requestData=$repairDB->query($sql);
+
+												if($requestData-> num_rows >0){
+													while($request = $requestData->fetch_assoc()){
+														$recordID = $request["req_id"];
+											?>
+
+											<tr class="clickable" onclick='showDetail("<?php echo $recordID;?>")'>
 												<td>
-													นพดล หมื่นศรี <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
+													<?php echo date('d/m/Y',strtotime($request["req_date"]));?>
 												</td>
-												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
-												<td class="d-none d-md-table-cell">
-													สุชาติ แก้วประดิษฐ์ <br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
-												</td>
-											</tr>
-											<tr class="clickable">
-												<td>01/01/2021</td>
 												<td>
-													นพดล หมื่นศรี <br> 
+													<?php echo $request["user_name"]."  ".$request["user_lastname"];?> <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
+														<?php echo $request["dep_name"] != "" ? $request["dep_name"] : "ไม่มีแผนก/หน่วยงาน";?>
 													</span>
 												</td>
-												<td><span class="badge bg-warning w-100 py-1">รอดำเนินการ</span></td>
+
+												<?php
+														$color = "";
+														if($request["req_status"] == "รอดำเนินการ") $color = "bg-warning";
+														else if($request["req_status"] == "กำลังดำเนินการ") $color = "bg-primary";
+														else if($request["req_status"] == "ดำเนินการเสร็จสิ้น") $color = "bg-success";
+														else if($request["req_status"] == "ยกเลิกรายการ") $color = "bg-danger";
+												?>
+
+												<td><span class="badge <?php echo $color;?> w-100 py-1"><?php echo $request["req_status"];?></span></td>
 												<td class="d-none d-md-table-cell">
-													สุชาติ แก้วประดิษฐ์ <br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
+													<?php echo $request["officer_name"] != "" ? $request["officer_name"] : "ยังไม่มีผู้ดำเนินการ";?><br>
 												</td>
 											</tr>
-											<tr class="clickable">
-												<td>01/01/2021</td>
-												<td>
-													นพดล หมื่นศรี <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
-												</td>
-												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
-												<td class="d-none d-md-table-cell">
-													สุชาติ แก้วประดิษฐ์ <br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
-												</td>
-											</tr>
-											<tr class="clickable">
-												<td>01/01/2021</td>
-												<td>
-													นพดล หมื่นศรี <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
-												</td>
-												<td><span class="badge bg-danger w-100 py-1">ยกเลิกรายการ</span></td>
-												<td class="d-none d-md-table-cell">
-													สุชาติ แก้วประดิษฐ์ <br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
-												</td>
-											</tr>
-											<tr class="clickable">
-												<td>01/01/2021</td>
-												<td>
-													นพดล หมื่นศรี <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
-												</td>
-												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
-												<td class="d-none d-md-table-cell">
-													สุชาติ แก้วประดิษฐ์ <br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
-												</td>
-											</tr>
-											<tr class="clickable">
-												<td>01/01/2021</td>
-												<td>
-													นพดล หมื่นศรี <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
-												</td>
-												<td><span class="badge bg-primary w-100 py-1">กำลังดำเนินการ</span></td>
-												<td class="d-none d-md-table-cell">
-													สุชาติ แก้วประดิษฐ์ <br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
-												</td>
-											</tr>
-											<tr class="clickable">
-												<td>01/01/2021</td>
-												<td>
-													นพดล หมื่นศรี <br> 
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														กลุ่มงานพัฒนาศักยภาพเครือข่ายและนิทศติดตามงานสุขภาพจิตในเขตสุขภาพ
-													</span>
-												</td>
-												<td><span class="badge bg-success w-100 py-1">ดำเนินการเสร็จสิ้น</span></td>
-												<td class="d-none d-md-table-cell">
-													สุชาติ แก้วประดิษฐ์ <br>
-													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														ช่างซ่อมบำรุง
-													</span>
-												</td>
-											</tr>
-											<tr onclick="window.location='a-request.php';" class="clickable">
-												<td colspan="4" class="text-center">
-													รายการเพิ่มเติม
-												</td>
-											</tr>
+
+											<?php 
+													} 
+												}else{
+													echo '<tr height=60px><td colspan="5" class="text-center">--- No record found ---</td></tr>';
+												}
+											?>
+
 										</tbody>
 									</table>
 									</div>
@@ -360,6 +333,7 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
+	<script src="app/script/request-manage.js"></script>
 	<script>
 		// Request line chart
 		document.addEventListener("DOMContentLoaded", function() {
@@ -372,7 +346,18 @@
 						fill: true,
 						backgroundColor: "transparent",
 						borderColor: window.theme.primary,
-						data: [2115, 1562, 1584, 1892, 1487, 2223, 2966, 2448, 2905, 3838, 2917, 3327]
+						data: [	<?php echo $line["Jan"];?>,
+								<?php echo $line["Feb"];?>,
+								<?php echo $line["Mar"];?>,
+								<?php echo $line["Apr"];?>,
+								<?php echo $line["May"];?>,
+								<?php echo $line["Jun"];?>,
+								<?php echo $line["Jul"];?>,
+								<?php echo $line["Aug"];?>,
+								<?php echo $line["Sep"];?>,
+								<?php echo $line["Oct"];?>,
+								<?php echo $line["Nov"];?>,
+								<?php echo $line["Dec"];?>]
 					}]
 				},
 				options: {
@@ -421,7 +406,7 @@
 				data: {
 					labels: ["รอดำเนินการ", "กำลังดำเนินการ", "ดำเนินการเสร็จสิ้น", "ยกเลิกรายการ"],
 					datasets: [{
-						data: [260, 125, 146, 54],
+						data: [<?php echo $pie["waiting"];?>, <?php echo $pie["inprogress"];?>, <?php echo $pie["done"];?>, <?php echo $pie["cancelled"];?>],
 						backgroundColor: [
 							window.theme.warning,
 							window.theme.primary,

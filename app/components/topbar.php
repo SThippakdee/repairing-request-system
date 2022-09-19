@@ -7,12 +7,12 @@
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
 							<a class="nav-link" href="#" data-bs-toggle="dropdown">
-                				<img src="<?php echo("img/avatars/".$row["user_profile"]);?>" class="avatar img-fluid rounded-circle me-1"/>
+                				<img src="<?php echo("img/avatars/".$row["user_profile"]).'?uniq='.uniqid();?>" class="avatar img-fluid rounded-circle me-1"/>
               				</a>
 							<div class="dropdown-menu dropdown-menu-end p-0" style="width:250px;">
 								<div class="card card-profile shadow-lg mb-0 mt-0">
 									<div class="card-header text-center" style="background-image: url(img/pics/profile-bg.jpg);">
-										<img class="rounded-circle mt-2 border border-4 border-light" src="<?php echo("img/avatars/".$row["user_profile"]);?>" style="width:100px; height: 100px">
+										<img class="rounded-circle mt-2 border border-4 border-light" src="<?php echo("img/avatars/".$row["user_profile"]).'?uniq='.uniqid();?>" style="width:100px; height: 100px">
 									</div>
 									<div class="card-body text-center p-2">
 										<h4 class="mb-3 mt-2"><?php echo($row["user_name"]."  ".$row["user_lastname"]);?></h4>

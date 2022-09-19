@@ -1,18 +1,8 @@
 <?php
-	if(session_status()==PHP_SESSION_NONE) session_start();
-	if(isset($_SESSION["RWeb-userLevel"]) && $_SESSION["RWeb-userLevel"] == "1"){
-		require_once("app/script/header-a.php");
+	require_once("app/script/header-a.php");
+	if(!isset($_SESSION["RWeb-paramID"])){
+		header("location:javascript://history.go(-1)");
 	}
-	else if(isset($_SESSION["RWeb-userLevel"]) && $_SESSION["RWeb-userLevel"] == "2"){
-		require_once("app/script/header-o.php");
-	}
-	else if(isset($_SESSION["RWeb-userLevel"]) && $_SESSION["RWeb-userLevel"] == "3"){
-		require_once("app/script/header-u.php");
-	}
-	else{
-		header("Location: index.php");
-        exit();
-	}  
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +12,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Profile</title>
+	<title>บัญชีผู้ใช้</title>
 
 	<!-- Include fonts/css/js -->
 	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
@@ -81,12 +71,6 @@
 			if($_SESSION["RWeb-userLevel"] == "1"){
 				require_once("app/components/sidebar-admin.php");
 			}
-			else if($_SESSION["RWeb-userLevel"] == "2"){
-				require_once("app/components/sidebar-officer.php");
-			}
-			else if($_SESSION["RWeb-userLevel"] == "3"){
-				require_once("app/components/sidebar-user.php");
-			}
 		?>
 
 		<div class="main">
@@ -97,9 +81,15 @@
 				<div class="container-fluid p-0 h-100">
 					<!--Start Content-->
 					<?php
-						$sql = sprintf("SELECT * FROM user U LEFT JOIN user_level L ON U.user_level = L.level_id WHERE user_id = '%s'", $_SESSION['RWeb-userID']);
+						$sql = sprintf("SELECT * FROM user U LEFT JOIN user_level L ON U.user_level = L.level_id WHERE user_id = '%s'", $_SESSION['RWeb-paramID']);
 						$result=$repairDB->query($sql);
+						if($result->num_rows==0){
+					?>
+							<script>history.back()</script>
+					<?php
+						}
 						$row=$result->fetch_assoc();
+						
 					?>
 
 						<div class="row g-3 h-100">
@@ -110,7 +100,7 @@
 									<div class="card-body text-center">
 
 										<form action="be-profile-manage.php" method="POST" enctype="multipart/form-data">
-											<img id="profilePic" class="card-profile-img" src="<?php echo("img/avatars/".$row["user_profile"]).'?uniq='.uniqid();?>">
+											<img id="profilePic" class="card-profile-img" src="<?php echo("img/avatars/".$row["user_profile"]).'?uniq='.uniqid().'?uniq='.uniqid();?>">
 											<input id="avatarUpload" name="user_profile" class="d-none" type="file" accept="image/*" 
 												onchange="previewFile(this);"
 											/>
@@ -139,7 +129,7 @@
 								</div>
 							</div>
 							<div class="col-xl-8">
-								<form id="mainForm" action="be-profile-manage.php" method="POST" class="card card-profile overflow-hidden shadow-lg h-100 mb-0">
+								<form id="mainForm" action="be-user-manage.php" method="POST" class="card card-profile overflow-hidden shadow-lg h-100 mb-0">
 									<div class="card-header text-center d-table" style="background-image: url(img/pics/profile-bg.jpg);">
 										<div class="d-table-cell align-middle p-0">
 											<h1 class="text-white fw-bold">
@@ -185,7 +175,7 @@
 												?>
 
 												<div class="row">
-													<div class="col">
+													<div class="col mb-2">
 														หน่วยงาน/แผนก
 														<select id="dep_id" name="dep_id" class="form-select" required>
 															<option disabled selected>-- เลือกหน่วยงาน/แผนก --</option>
@@ -205,19 +195,51 @@
 
 														</select>
 													</div>
+													
+													<?php
+														$sql = sprintf("SELECT * FROM user_level WHERE level_id <> 1 ORDER BY level_id DESC;");
+														$levelResult=$repairDB->query($sql);
+													?>
+
+													<div class="col-12 mb-1">
+														กำหนดสิทธ์การใช้งาน
+														<select id="levelSelect" name="user_level" class="form-select" required>
+															<option value='' disabled selected>-- กำหนดสิทธ์การใช้งาน --</option>
+
+															<?php
+															while ($level = $levelResult->fetch_assoc()){
+															?>
+
+															<option value="<?php echo $level['level_id']?>" <?php if($row["user_level"]==$level["level_id"]) echo "selected";?>>
+																<?php echo $level['level_name']?>
+															</option>
+																
+															<?php
+															}
+															?>
+
+														</select>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 									<div class="card-footer">
 										<div class="row g-2 mb-0 justify-content-end">
-                                            <div class="col-12 col-md-6 col-xl-3">
+                                            <div class="col-12 col-md-3 col-lg-12 col-xl-3">
                                                 <a class="btn btn-lg btn-secondary w-100" onclick="history.back()">
                                                     <i class="fa-solid fa-circle-chevron-left fa-lg me-2"></i>
                                                     ย้อนกลับ
                                                 </a>
                                             </div>
-                                            <div class="col-12 col-md-6 col-xl-3">
+											<div class="col-12 col-md-3 col-lg-12 col-xl-3">
+												<?php $img = $row["user_profile"];?>
+                                                <a class="btn btn-lg btn-warning w-100" onclick="deleteAcc('<?php echo $user_id;?>','<?php echo $img;?>')">
+													<i class="fa-solid fa-lg fa-trash-can me-2"></i>
+                                                    ลบบัญชี
+                                                </a>
+                                            </div>
+                                            <div class="col-12 col-md-3 col-lg-12 col-xl-3">
                                                 <button type="submit" class="btn btn-lg btn-primary w-100">
                                                     <i class="fa-regular fa-floppy-disk fa-lg me-2"></i>
                                                     อัพเดท
@@ -239,10 +261,11 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
-	<script src="app/script/profile-manage.js"></script>
+	<script src="app/script/user-manage.js"></script>
 	<script>
 		$(document).ready(function() {
 			$('#dep_id').select2();
+			$('#levelSelect').select2();
 		});
 	</script>
 </body>

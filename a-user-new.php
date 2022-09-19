@@ -1,18 +1,5 @@
 <?php
-	if(session_status()==PHP_SESSION_NONE) session_start();
-	if(isset($_SESSION["RWeb-userLevel"]) && $_SESSION["RWeb-userLevel"] == "1"){
-		require_once("app/script/header-a.php");
-	}
-	else if(isset($_SESSION["RWeb-userLevel"]) && $_SESSION["RWeb-userLevel"] == "2"){
-		require_once("app/script/header-o.php");
-	}
-	else if(isset($_SESSION["RWeb-userLevel"]) && $_SESSION["RWeb-userLevel"] == "3"){
-		require_once("app/script/header-u.php");
-	}
-	else{
-		header("Location: index.php");
-        exit();
-	}  
+    require_once("app/script/header-a.php");
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +9,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Profile</title>
+	<title>บัญชีผู้ใช้</title>
 
 	<!-- Include fonts/css/js -->
 	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
@@ -77,17 +64,7 @@
 <body>
 	<div class="wrapper">
 		<!--Sidebar-->
-		<?php
-			if($_SESSION["RWeb-userLevel"] == "1"){
-				require_once("app/components/sidebar-admin.php");
-			}
-			else if($_SESSION["RWeb-userLevel"] == "2"){
-				require_once("app/components/sidebar-officer.php");
-			}
-			else if($_SESSION["RWeb-userLevel"] == "3"){
-				require_once("app/components/sidebar-user.php");
-			}
-		?>
+		<?php require_once("app/components/sidebar-admin.php");?>
 
 		<div class="main">
 			<!--Topbar-->
@@ -96,50 +73,51 @@
 			<main class="content" style="background-color: #EBEBEB;">
 				<div class="container-fluid p-0 h-100">
 					<!--Start Content-->
-					<?php
-						$sql = sprintf("SELECT * FROM user U LEFT JOIN user_level L ON U.user_level = L.level_id WHERE user_id = '%s'", $_SESSION['RWeb-userID']);
-						$result=$repairDB->query($sql);
-						$row=$result->fetch_assoc();
-					?>
-
 						<div class="row g-3 h-100">
-							<div class="col-xl-4">
+							<div class="col-xl-4 mt-0 mb-2">
 								<div class="card card-profile shadow-lg h-100 mb-0">
 									<div class="card-header" style="background-image: url(img/pics/profile-bg.jpg);"> </div>
 									
 									<div class="card-body text-center">
 
-										<form action="be-profile-manage.php" method="POST" enctype="multipart/form-data">
-											<img id="profilePic" class="card-profile-img" src="<?php echo("img/avatars/".$row["user_profile"]).'?uniq='.uniqid();?>">
+										<form action="be-user-manage.php" method="POST" enctype="multipart/form-data">
+											<img id="profilePic" class="card-profile-img" src="img/avatars/default-avatar.png">
 											<input id="avatarUpload" name="user_profile" class="d-none" type="file" accept="image/*" 
 												onchange="previewFile(this);"
 											/>
-											<input type="hidden" name="action" value="updateImg"/>
-											<input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>"/>
+											<input type="hidden" name="action" value="updateImg">
+											<input type="hidden" name="user_id" value="">
 											<button id="imgFormSubmit" type="submit" class="d-none"></button>
 										</form>
 										<div style="border: 4px solid #222e3c; border-radius: 20px; box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);">
-											<h3 class="mt-2"><?php echo($row["user_name"]." ".$row["user_lastname"]);?></h3>
-											<h4>Username: <?php echo $row["user_username"];?></h4>
-											<h4 class="text-muted">( <?php echo $row["level_name"];?> )</h4>
+											<h3 class="mt-2">ชื่อผู้ใช้ นามสกุล</h3>
+											<h4>Username</h4>
+											<h4 class="text-muted">( สิทธ์การใช้งาน )</h4>
 										</div>
-									</div>
 
-									<div class="card-footer">
-										<div class="row g-2 justify-content-center">
-											<div class="col-12 col-sm-6 col-xl-12">
-												<?php $user_id = $row["user_id"];?>
-												<a class="btn btn-lg btn-primary w-100" onclick="resetPass('<?php echo $user_id;?>')">
-													<i class="fa-solid fa-key fa-lg me-2"></i>
-													รีเซ็ตรหัสผ่าน
-												</a>
+										<form id="addForm" action="be-user-manage.php" method="POST">
+										<div class="card card-profile shadow-lg mb-0 mt-4 border border-2">
+											<div class="card-body text-start">
+												<div class="row">
+													<div class="col-12 mb-2">
+														รหัสผ่าน
+														<input type="password" name="user_password" class="form-control form-control-lg" autocomplete="off" placeholder="รหัสผ่านสำหรับเข้าสู่ระบบ"
+														value="" required/>
+													</div>
+													<div class="col-12 mb-3">
+														ยืนยันรหัสผ่าน
+														<input type="password" name="checkPassword" class="form-control form-control-lg" autocomplete="off" placeholder="ยืนยันรหัสผ่าน"
+														value="" required/>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
+
 								</div>
 							</div>
-							<div class="col-xl-8">
-								<form id="mainForm" action="be-profile-manage.php" method="POST" class="card card-profile overflow-hidden shadow-lg h-100 mb-0">
+							<div class="col-xl-8 mt-0 mb-2">
+								<div class="card card-profile overflow-hidden shadow-lg h-100 mb-0">
 									<div class="card-header text-center d-table" style="background-image: url(img/pics/profile-bg.jpg);">
 										<div class="d-table-cell align-middle p-0">
 											<h1 class="text-white fw-bold">
@@ -149,33 +127,32 @@
 										</div>
 									</div>
 									<div class="card-body">
-										<div class="card card-profile shadow-lg mb-0 border border-2">
+										<div class="card card-profile shadow-lg mb-0 mt-2 border border-2">
 											<div class="card-body">
 												<h5 class="card-title">ข้อมูลส่วนตัว</h5>
-												<div class="row mt-4">
+												<div class="row mt-3">
 													<div class="col-12 col-sm-6 mb-2">
 														ชื่อผู้ใช้
-														<input type="hidden" name="action" value="updateData"/>
-														<input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>"/>
-														<input type="text" name="user_name"class="form-control form-control-lg" autocomplete="off" placeholder="ชื่อผู้ใช้"
-														value="<?php echo $row["user_name"];?>" required/>
+														<input type="hidden" name="action" value="addRecord"/>
+														<input id="user_name" type="text" name="user_name" class="form-control form-control-lg" autocomplete="off" placeholder="ชื่อผู้ใช้"
+														value="" required/>
 													</div>
 													<div class="col-12 col-sm-6 mb-2">
 														นามสกุล
-														<input type="text" name="user_lastname" class="form-control form-control-lg" autocomplete="off" placeholder="นามสกุล"
-														value="<?php echo $row["user_lastname"];?>" required/>
+														<input id="user_lastname" type="text" name="user_lastname" class="form-control form-control-lg" autocomplete="off" placeholder="นามสกุล"
+														value="" required/>
 													</div>
 												</div>
 												<div class="row">
 													<div class="col-12 col-sm-6 mb-2">
 														Username
-														<input type="text" name="user_username" class="form-control form-control-lg" autocomplete="off" placeholder="Username"
-														value="<?php echo $row["user_username"];?>" required/>
+														<input id="user_username" type="text" name="user_username" class="form-control form-control-lg" autocomplete="off" placeholder="Username"
+														value="" required/>
 													</div>
 													<div class="col-12 col-sm-6 mb-2">
 														โทรศัพท์
 														<input type="text" name="user_tel" class="form-control form-control-lg" autocomplete="off" placeholder="โทรศัพท์"
-														value="<?php echo $row["user_tel"];?>" required/>
+														value="" required/>
 													</div>
 												</div>
 
@@ -185,20 +162,45 @@
 												?>
 
 												<div class="row">
-													<div class="col">
+													<div class="col mb-2">
 														หน่วยงาน/แผนก
 														<select id="dep_id" name="dep_id" class="form-select" required>
-															<option disabled selected>-- เลือกหน่วยงาน/แผนก --</option>
-															<option <?php if($row["dep_id"]=="") echo "selected";?> value= ''>ไม่มีหน่วยงาน</option>
+															<option value='' disabled selected>-- เลือกหน่วยงาน/แผนก --</option>
+															<option value= ''>ไม่มีหน่วยงาน</option>
 
 															<?php
 															while ($dep = $depResult->fetch_assoc()){
 															?>
 
-															<option value="<?php echo $dep['dep_id']?>" <?php if($row["dep_id"]==$dep["dep_id"]) echo "selected";?> >
+															<option value="<?php echo $dep['dep_id']?>" >
 																<?php echo $dep['dep_name']?>
 															</option>
 															
+															<?php
+															}
+															?>
+
+														</select>
+													</div>
+
+													<?php
+														$sql = sprintf("SELECT * FROM user_level WHERE level_id <> 1 ORDER BY level_id DESC;");
+														$levelResult=$repairDB->query($sql);
+													?>
+
+													<div class="col-12">
+														กำหนดสิทธ์การใช้งาน
+														<select id="levelSelect" name="user_level" class="form-select" required>
+															<option value='' disabled selected>-- กำหนดสิทธ์การใช้งาน --</option>
+
+															<?php
+															while ($level = $levelResult->fetch_assoc()){
+															?>
+
+															<option value="<?php echo $level['level_id']?>" >
+																<?php echo $level['level_name']?>
+															</option>
+																
 															<?php
 															}
 															?>
@@ -220,7 +222,7 @@
                                             <div class="col-12 col-md-6 col-xl-3">
                                                 <button type="submit" class="btn btn-lg btn-primary w-100">
                                                     <i class="fa-regular fa-floppy-disk fa-lg me-2"></i>
-                                                    อัพเดท
+                                                    เพิ่มบัญชี
                                                 </button>
                                             </div>
                                         </div>
@@ -239,10 +241,11 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
-	<script src="app/script/profile-manage.js"></script>
+	<script src="app/script/user-manage.js"></script>
 	<script>
 		$(document).ready(function() {
 			$('#dep_id').select2();
+			$('#levelSelect').select2();
 		});
 	</script>
 </body>

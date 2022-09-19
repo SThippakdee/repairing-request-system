@@ -1,5 +1,5 @@
 <?php
-    require_once("app/script/header-a.php");
+    require_once("app/script/header-o.php");
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>รายการแจ้งซ่อม</title>
+	<title>บันทึกการปฏิบัติงาน</title>
 
 	<!-- Include fonts/css/js -->
 	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
@@ -58,7 +58,7 @@
 <body>
 	<div class="wrapper">
 		<!--Sidebar-->
-		<?php require_once("app/components/sidebar-admin.php");?>
+		<?php require_once("app/components/sidebar-officer.php");?>
 
 		<div class="main">
 			<!--Topbar-->
@@ -67,7 +67,7 @@
 			<main class="content" style="background-color: #EBEBEB;">
 				<div class="container-fluid p-0">
 					<!--Start Content-->
-					<h3 id="pageName" class="fw-bold mb-3">รายการแจ้งซ่อมของฉัน</h3>
+					<h3 id="pageName" class="fw-bold mb-3">บันทึกการปฏิบัติงาน</h3>
 
 					<div class="row row-cols-1 g-4">
 						<div class="col">
@@ -76,12 +76,6 @@
 								<div class="row g-3 px-2 mb-3">
 									<div class="col-12 col-lg-6">
 										<div class="row g-2">
-											<div class="col-6">
-												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="o-request-new.php">
-													<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
-													เพิ่มรายการ
-												</a>
-											</div>
 											<div class="col-6">
 												<a id="print" class="btn btn-lg btn-primary w-100 text-nowrap">
 													<i class="fa-solid fa-print fa-lg me-2"></i>
@@ -97,12 +91,12 @@
 								</div>
 
 									<?php
-										$sql = sprintf('SELECT 	(select count(*) FROM request WHERE user_id = "%s") as total, 
-														(select count(*) FROM request WHERE req_status ="รอดำเนินการ" AND user_id = "%s") as waiting, 
-														(select count(*) FROM request WHERE req_status ="กำลังดำเนินการ" AND user_id = "%s") as inprogress,
-														(select count(*) FROM request WHERE req_status ="ดำเนินการเสร็จสิ้น" AND user_id = "%s") as done, 
-														(select count(*) FROM request WHERE req_status ="ยกเลิกรายการ" AND user_id = "%s") as cancelled;', 
-														$_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"]);
+										$sql = sprintf('SELECT 	(select count(*) FROM request RQ LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id WHERE officer_id = "%s") as total, 
+																(select count(*) FROM request RQ LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id WHERE officer_id = "%s" AND req_status ="รอดำเนินการ" ) as waiting, 
+																(select count(*) FROM request RQ LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id WHERE officer_id = "%s" AND req_status ="กำลังดำเนินการ" ) as inprogress,
+																(select count(*) FROM request RQ LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id WHERE officer_id = "%s" AND req_status ="ดำเนินการเสร็จสิ้น" ) as done, 
+																(select count(*) FROM request RQ LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id WHERE officer_id = "%s" AND req_status ="ยกเลิกรายการ" ) as cancelled;'
+																, $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"]);
 										$result=$repairDB->query($sql);
 										$row=$result->fetch_assoc();
 									?>
@@ -144,7 +138,7 @@
 												</th>
 											</tr>
 											<tr>
-												<th>วันที่แจ้ง</th>
+												<th>วันที่บันทึก</th>
 												<th>รหัสรายการแจ้งซ่อม</th>
 												<th>ชื่อผู้แจ้ง</th>
 												<th>เรื่องที่ขอบริการ</th>
@@ -155,14 +149,15 @@
 										<tbody>
 
 											<?php
-												$sql=sprintf("	SELECT 	req_date, RQ.req_id, user_name, user_lastname, service_name, req_status, officer_id, 
+												$sql=sprintf("	SELECT 	solv_date, RQ.req_id, user_name, user_lastname, service_name, req_status, officer_id, 
 																(select CONCAT(user_name, ' ', user_lastname) FROM user WHERE user_id = officer_id)as officer_name 
 														FROM 	request RQ 
 																LEFT JOIN user US ON RQ.user_id = US.user_id 
 																LEFT JOIN service SV ON RQ.service_id = SV.service_id 
 																LEFT JOIN device_type DT ON RQ.type_id = DT.type_id 
 																LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id
-														WHERE US.user_id = '%s'", $_SESSION["RWeb-userID"]);
+																WHERE officer_id ='%s'",$_SESSION["RWeb-userID"]);
+
 												$requestData=$repairDB->query($sql);
 
 												while($request = $requestData->fetch_assoc()){
@@ -171,7 +166,7 @@
 
 											<tr class="clickable" onclick='showDetail("<?php echo $recordID?>")'>
 												<td>
-													<?php echo date('d/m/Y',strtotime($request["req_date"]));?>
+													<?php echo date('d/m/Y',strtotime($request["solv_date"]));?>
 												</td>
 												<td>
 													<?php echo $recordID;?>
@@ -225,7 +220,7 @@
 
 	<script src="app/script/sidebar.js"></script>
 	<script src="app/script/table.js"></script>
-	<script src="app/script/request-manage.js"></script>
+	<script src="app/script/resolv-manage-o.js"></script>
 </body>
 </html>
 <?php $repairDB->close(); ?>

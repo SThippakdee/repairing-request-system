@@ -5,6 +5,12 @@
         if($level == '1'){
             header('Location: a-dashboard.php');
         }
+        if($level == '2'){
+            header('Location: o-request-all.php');
+        }
+        if($level == '3'){
+            header('Location: u-request.php');
+        }
     }else{
         header('Location: index.php');
     }

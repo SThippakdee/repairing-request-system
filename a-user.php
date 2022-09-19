@@ -1,5 +1,5 @@
 <?php
-    require_once("app/script/a-header.php");
+    require_once("app/script/header-a.php");
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +79,7 @@
 									<div class="col-12 col-lg-6">
 										<div class="row g-2">
 											<div class="col-6">
-												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="#">
+												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="a-user-new.php">
 													<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
 													เพิ่มรายการ
 												</a>
@@ -150,12 +150,12 @@
 											$userData=$repairDB->query($sql);
 
 											while($user = $userData->fetch_assoc()){
-												$userID = $user["user_id"];
+												$recordID = $user["user_id"];
 										?>
 
-										<tr class="clickable">
+										<tr class="clickable" onclick='showDetail("<?php echo $recordID?>")' >
 											<td class="text-center">
-												<img src='img/avatars/<?php echo $user["user_profile"];?>' class="rounded-circle" width="45"/>
+												<img src='img/avatars/<?php echo $user["user_profile"].'?uniq='.uniqid();?>' class="rounded-circle" width="45"/>
 											</td>
 											<td>
 												<?php echo $user["user_name"]."  ".$user["user_lastname"];?>
@@ -204,6 +204,18 @@
 
 	<script src="app/script/sidebar.js"></script>
 	<script src="app/script/table.js"></script>
+	<script type="text/javascript">
+		function showDetail(id) {
+			$.ajax({
+				type:'post',
+				url: "be-user-manage.php",
+				data: {action: "viewRecord", user_id: id},
+				success:function(data) {
+					window.location.href="a-user-manage.php";
+				}
+			});
+		}
+	</script>
 </body>
 </html>
 <?php $repairDB->close();?>

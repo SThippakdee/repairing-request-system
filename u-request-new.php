@@ -1,5 +1,5 @@
 <?php
-    require_once("app/script/header-a.php");
+    require_once("app/script/header-u.php");
 ?>
 
 <!DOCTYPE html>
@@ -53,7 +53,7 @@
 <body>
 	<div class="wrapper">
 		<!--Sidebar-->
-		<?php require_once("app/components/sidebar-admin.php");?>
+		<?php require_once("app/components/sidebar-user.php");?>
 
 		<div class="main">
 			<!--Topbar-->
@@ -232,7 +232,7 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
-    <script src="app/script/request-manage.js"></script>
+    <script src="app/script/request-manage-u.js"></script>
     <script>
 		$(document).ready(function() {
 			$('#deviceType').select2();

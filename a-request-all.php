@@ -9,7 +9,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>รายการแจ้งซ่อม</title>
+	<title>รายการแจ้งซ่อมทั้งหมด</title>
 
 	<!-- Include fonts/css/js -->
 	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
@@ -67,7 +67,7 @@
 			<main class="content" style="background-color: #EBEBEB;">
 				<div class="container-fluid p-0">
 					<!--Start Content-->
-					<h3 id="pageName" class="fw-bold mb-3">รายการแจ้งซ่อมของฉัน</h3>
+					<h3 id="pageName" class="fw-bold mb-3">รายการแจ้งซ่อม</h3>
 
 					<div class="row row-cols-1 g-4">
 						<div class="col">
@@ -77,7 +77,7 @@
 									<div class="col-12 col-lg-6">
 										<div class="row g-2">
 											<div class="col-6">
-												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="o-request-new.php">
+												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="a-request-new.php">
 													<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
 													เพิ่มรายการ
 												</a>
@@ -97,12 +97,11 @@
 								</div>
 
 									<?php
-										$sql = sprintf('SELECT 	(select count(*) FROM request WHERE user_id = "%s") as total, 
-														(select count(*) FROM request WHERE req_status ="รอดำเนินการ" AND user_id = "%s") as waiting, 
-														(select count(*) FROM request WHERE req_status ="กำลังดำเนินการ" AND user_id = "%s") as inprogress,
-														(select count(*) FROM request WHERE req_status ="ดำเนินการเสร็จสิ้น" AND user_id = "%s") as done, 
-														(select count(*) FROM request WHERE req_status ="ยกเลิกรายการ" AND user_id = "%s") as cancelled;', 
-														$_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"], $_SESSION["RWeb-userID"]);
+										$sql = 'SELECT 	(select count(*) FROM request) as total, 
+														(select count(*) FROM request WHERE req_status ="รอดำเนินการ" ) as waiting, 
+														(select count(*) FROM request WHERE req_status ="กำลังดำเนินการ" ) as inprogress,
+														(select count(*) FROM request WHERE req_status ="ดำเนินการเสร็จสิ้น" ) as done, 
+														(select count(*) FROM request WHERE req_status ="ยกเลิกรายการ" ) as cancelled;';
 										$result=$repairDB->query($sql);
 										$row=$result->fetch_assoc();
 									?>
@@ -155,14 +154,13 @@
 										<tbody>
 
 											<?php
-												$sql=sprintf("	SELECT 	req_date, RQ.req_id, user_name, user_lastname, service_name, req_status, officer_id, 
+												$sql="	SELECT 	req_date, RQ.req_id, user_name, user_lastname, service_name, req_status, officer_id, 
 																(select CONCAT(user_name, ' ', user_lastname) FROM user WHERE user_id = officer_id)as officer_name 
 														FROM 	request RQ 
 																LEFT JOIN user US ON RQ.user_id = US.user_id 
 																LEFT JOIN service SV ON RQ.service_id = SV.service_id 
 																LEFT JOIN device_type DT ON RQ.type_id = DT.type_id 
-																LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id
-														WHERE US.user_id = '%s'", $_SESSION["RWeb-userID"]);
+																LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id";
 												$requestData=$repairDB->query($sql);
 
 												while($request = $requestData->fetch_assoc()){

@@ -1,5 +1,5 @@
 <?php
-    require_once("app/script/header-a.php");
+    require_once("app/script/header-u.php");
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +58,7 @@
 <body>
 	<div class="wrapper">
 		<!--Sidebar-->
-		<?php require_once("app/components/sidebar-admin.php");?>
+		<?php require_once("app/components/sidebar-user.php");?>
 
 		<div class="main">
 			<!--Topbar-->
@@ -77,7 +77,7 @@
 									<div class="col-12 col-lg-6">
 										<div class="row g-2">
 											<div class="col-6">
-												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="o-request-new.php">
+												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="u-request-new.php">
 													<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
 													เพิ่มรายการ
 												</a>
@@ -225,7 +225,7 @@
 
 	<script src="app/script/sidebar.js"></script>
 	<script src="app/script/table.js"></script>
-	<script src="app/script/request-manage.js"></script>
+	<script src="app/script/request-manage-u.js"></script>
 </body>
 </html>
 <?php $repairDB->close(); ?>

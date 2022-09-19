@@ -1,5 +1,5 @@
 <?php
-    require_once("app/script/a-header.php");
+    require_once("app/script/header-a.php");
 ?>
 
 <!DOCTYPE html>
@@ -73,12 +73,14 @@
 									<thead>
 										<tr>
 											<th>หัวข้อการประเมิน</th>
+											<th class="d-none d-md-table-cell" width="200">คะแนนเฉี่ย</th>
 											<th width="135"></th>
 										</tr>
 									</thead>
 									<tbody>
 										<?php
-										$sql = "SELECT * FROM servey_topic WHERE top_id <> 1 ORDER BY top_name;";
+										$sql = "SELECT *, (select avg(list_rate) from servey_list WHERE top_id = servey_topic.top_id) as topic_avg
+												FROM servey_topic ORDER BY servey_topic.top_id;";
 										$result=$repairDB->query($sql);
 
 										if ($result->num_rows == 0){
@@ -89,6 +91,9 @@
 										<tr>
 											<td>
 												<?php echo $row['top_name'];?>
+											</td>
+											<td class="d-none d-md-table-cell">
+												<?php echo $row['topic_avg'] == "" ? "ยังไม่มีคะแนน" : number_format($row['topic_avg'], 2);?> คะแนน
 											</td>
 											<td class="text-end">
 												<div class="row g-1 p-0">
