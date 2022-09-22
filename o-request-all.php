@@ -164,7 +164,8 @@
 																LEFT JOIN user US ON RQ.user_id = US.user_id 
 																LEFT JOIN service SV ON RQ.service_id = SV.service_id 
 																LEFT JOIN device_type DT ON RQ.type_id = DT.type_id 
-																LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id";
+																LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id
+														ORDER BY req_date DESC;";
 												$requestData=$repairDB->query($sql);
 
 												while($request = $requestData->fetch_assoc()){

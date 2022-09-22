@@ -60,17 +60,29 @@
         //Update Profile Img
         if($action == "updateImg"){
             if(!empty($_FILES['user_profile']['tmp_name'])){
-                $user_id = $_POST['user_id'];
+                $user_id = $_POST['user_id']; 
+                $old_profile = $_POST['old_profile'];
+                
+                if($user_id == ""){
+                    $user_id = $_SESSION["RWeb-paramID"];
+                }
+
                 $uploaddir = 'img/avatars/';
                 $user_profile = "default-avatar.png";
                 
                 //Upload Img
                 list($name, $extension) = explode(".", $_FILES['user_profile']['name']);
-                $name = $user_id;
+                $name = uniqid("IMG-");
                 $file=sprintf("%s.%s", $name, $extension);                                
                 $uploadfile = $uploaddir . $file;
                 if (copy($_FILES['user_profile']['tmp_name'], $uploadfile)) {
                     $user_profile = $file;
+
+                    //Delete old avatar img
+                    if($old_profile != "default-avatar.png"){
+                        $old_profile = sprintf("img/avatars/%s", $old_profile);
+                        unlink($old_profile);
+                    }
 
                     $sql = "UPDATE user SET user_profile = ? WHERE user_id = ?;";
                     $stmt =  $repairDB->stmt_init(); 

@@ -110,11 +110,12 @@
 									<div class="card-body text-center">
 
 										<form action="be-profile-manage.php" method="POST" enctype="multipart/form-data">
-											<img id="profilePic" class="card-profile-img" src="<?php echo("img/avatars/".$row["user_profile"]).'?uniq='.uniqid();?>">
+											<img id="profilePic" class="card-profile-img" src="<?php echo("img/avatars/".$row["user_profile"]);?>">
 											<input id="avatarUpload" name="user_profile" class="d-none" type="file" accept="image/*" 
 												onchange="previewFile(this);"
 											/>
 											<input type="hidden" name="action" value="updateImg"/>
+											<input type="hidden" name="old_profile" value="<?php echo $row["user_profile"];?>"/>
 											<input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>"/>
 											<button id="imgFormSubmit" type="submit" class="d-none"></button>
 										</form>

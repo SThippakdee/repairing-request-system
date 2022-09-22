@@ -150,7 +150,8 @@
 													FROM 	user US 
 															LEFT JOIN user_dep DE ON US.dep_id = DE.dep_id 
 															LEFT JOIN user_level LV ON US.user_level = LV.level_id
-													WHERE	user_level <> 1";
+													WHERE	user_level <> 1
+													ORDER BY user_name, user_lastname;";
 											$userData=$repairDB->query($sql);
 
 											while($user = $userData->fetch_assoc()){
@@ -159,7 +160,7 @@
 
 										<tr class="clickable" onclick='showDetail("<?php echo $recordID?>")' >
 											<td class="text-center">
-												<img src='img/avatars/<?php echo $user["user_profile"].'?uniq='.uniqid();?>' class="rounded-circle" width="45"/>
+												<img src='img/avatars/<?php echo $user["user_profile"];?>' class="rounded-circle" width="45"/>
 											</td>
 											<td>
 												<?php echo $user["user_name"]."  ".$user["user_lastname"];?>
@@ -207,7 +208,7 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
-	<script src="app/script/table-account.js"></script>
+	<script src="app/script/table.js"></script>
 	<script type="text/javascript">
 		function showDetail(id) {
 			$.ajax({

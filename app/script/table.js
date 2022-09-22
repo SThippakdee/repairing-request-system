@@ -2,7 +2,7 @@
 var table = $('#table').DataTable({
     scrollX: true,
     lengthChange: false,
-    order: [[1, 'desc']],
+    order: [],
     searching: true,
     dom: 'Bfrtip',
     buttons: [

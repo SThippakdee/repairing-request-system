@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 19, 2022 at 12:21 PM
+-- Generation Time: Sep 22, 2022 at 08:13 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -40,7 +40,9 @@ INSERT INTO `device_type` (`type_id`, `type_name`) VALUES
 (1, 'เครื่องคอมพิวเตอร์'),
 (2, 'จอภาพ'),
 (3, 'อุปกรณ์ต่อพ่วง'),
-(4, 'เครื่องสำรองไฟ');
+(4, 'เครื่องสำรองไฟ'),
+(5, 'Printer'),
+(6, 'Router');
 
 -- --------------------------------------------------------
 
@@ -64,15 +66,19 @@ CREATE TABLE `request` (
 --
 
 INSERT INTO `request` (`req_id`, `user_id`, `service_id`, `type_id`, `dev_serial`, `req_date`, `req_detail`, `req_status`) VALUES
+('REQ-63244aa988ef', 'USR-631db1cb646b1', 3, 1, 'COM-874755', '2022-08-31', 'สาย LAN ชำรุดเสียหาย', 'กำลังดำเนินการ'),
+('REQ-63244aa988ei', 'USR-631db1cb646b1', 3, 1, 'COM-104877', '2022-08-31', 'ไดร์เวอร์การ์ด Wifi หาย ขึ้นข้อความ This device cannot start. (code 10) ใน device manager', 'รอดำเนินการ'),
 ('REQ-63244c43ab02b', 'USR-631db1cb646b1', 1, 1, 'COM-100342', '2022-09-16', 'บูทเครื่องไม่ติด วนซ้ำหน้า Starting Window', 'กำลังดำเนินการ'),
-('REQ-63244c8967c86', 'USR-631db1cb646b1', 2, 3, '', '2022-09-16', 'คีย์บอร์ด คอมเครื่อง 3 ตึกกุมารเวช พิมพ์ไม่ติด แต่ไฟเข้าปกติ', 'รอดำเนินการ'),
-('REQ-63244cb68a7c3', 'USR-631db1cb646b1', 3, 1, 'COM-100452', '2022-09-16', 'เชื่อมต่ออินเตอร์เน็ตไม่ได้ค่าาาาาาา', 'ดำเนินการเสร็จสิ้น'),
+('REQ-63244c8967c86', 'USR-631db1cb646b1', 2, 3, '', '2022-09-16', 'คีย์บอร์ด คอมคอมพิวเตอร์เครื่อง 3  ห้องออฟฟิศกลุ่มงานเวชระเบียน พิมพ์ไม่ติด แต่มีไฟสถานะขึ้นปรกติ', 'รอดำเนินการ'),
+('REQ-63244cb68a7c3', 'USR-631db1cb646b1', 3, 1, 'COM-100452', '2022-09-16', 'เชื่อมต่ออินเตอร์เน็ตไม่ได้', 'ดำเนินการเสร็จสิ้น'),
 ('REQ-632451332b014', 'USR-631db1cb646b1', 1, 4, '', '2022-09-16', 'ไฟชาร์จไม่เข้า มีเสียงแจ้งเตือนเมื่อใช้งาน', 'รอดำเนินการ'),
 ('REQ-6325706bd2c41', 'USR-63252e59ddd51', 1, 3, '', '2022-09-17', 'เมาส์เลื่อนไม่ได้ ไม่มีไฟแม้จะเสียบสาย USB', 'ยกเลิกรายการ'),
 ('REQ-6326b99ea5db6', 'USR-63269481200d4', 2, 3, '', '2022-09-18', 'สายคีย์บอร์ดขาด', 'ยกเลิกรายการ'),
 ('REQ-6326c4655651a', 'USR-63269481200d4', 1, 2, '', '2022-09-18', 'จอกระพริบตลอดเวลา รีบูทเครื่องแล้วก็ยังเป็นอยู่', 'ดำเนินการเสร็จสิ้น'),
 ('REQ-6327b88483e28', 'USR-63269481200d4', 1, 1, 'COM-17725', '2022-09-19', 'เคสคอมพิวเตอร์ขึ้นสนิม', 'กำลังดำเนินการ'),
-('REQ-6327c1cb6f6e7', 'USR-63252e59ddd51', 2, 3, '', '2022-09-19', 'คีย์บอร์ดระเบิด', 'รอดำเนินการ');
+('REQ-632be7c007a04', 'USR-631db1cb646b1', 1, 2, 'COM-6320014', '2022-09-22', 'จอไม่ติด แต่ไฟเข้าปกติ', 'รอดำเนินการ'),
+('REQ-632c9a6fd6c57', 'USR-63252e59ddd51', 3, 6, '', '2022-09-23', 'Router ไฟสถานะไม่ติด', 'รอดำเนินการ'),
+('REQ-632c9db3a333e', 'USR-63269481200d4', 2, 5, '', '2022-09-23', 'หมึกไม่ออกเมื่อพิมพ์เอกสารสีไปประมาณ 5 แผ่น', 'กำลังดำเนินการ');
 
 -- --------------------------------------------------------
 
@@ -122,7 +128,9 @@ INSERT INTO `request_solving` (`solv_id`, `req_id`, `solv_detail`, `solv_note`, 
 (4, 'REQ-6325706bd2c41', 'ตรวจสอบแล้ว วงจรภายในเสียหาย ไม่สามารถซ่อมแซมได้ ยกเลิกรายการ', '', 'USR-63252e59ddd51', '2022-09-17'),
 (5, 'REQ-6326b99ea5db6', 'ไม่สามารถทำการซ่อมแซมได้ ขอให้มารับอุปกรณ์ทดแทนที่ฝ่ายพัสดุ', 'ไม่สามารถซ่อมแซมได้', 'USR-63252e59ddd51', '2022-09-19'),
 (6, 'REQ-6327b88483e28', NULL, NULL, 'USR-63252e59ddd51', '2022-09-19'),
-(7, 'REQ-6326c4655651a', 'แก้ไขแล้วโดยการติดตั้ง Window ใหม่', '', 'USR-63252e59ddd51', '2022-09-19');
+(7, 'REQ-6326c4655651a', 'แก้ไขแล้วโดยการติดตั้ง Window ใหม่', '', 'USR-63252e59ddd51', '2022-09-19'),
+(9, 'REQ-63244aa988ef', NULL, NULL, 'USR-63252e59ddd51', '2022-09-23'),
+(10, 'REQ-632c9db3a333e', NULL, NULL, 'USR-63252e59ddd51', '2022-09-23');
 
 -- --------------------------------------------------------
 
@@ -174,7 +182,8 @@ INSERT INTO `servey_topic` (`top_id`, `top_name`) VALUES
 (1, 'ภาพรวมของการให้บริการ'),
 (2, 'ความรู้ความสามารถในการให้บริการของเจ้าหน้าที่'),
 (3, 'การแนะนำหลังการให้บริการ'),
-(4, 'ความรวดเร็วในการให้บริการของเจ้าหน้าที่');
+(4, 'ความรวดเร็วในการให้บริการของเจ้าหน้าที่'),
+(5, 'รายการทดสอบ');
 
 -- --------------------------------------------------------
 
@@ -220,11 +229,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_profile`, `user_name`, `user_lastname`, `user_tel`, `dep_id`, `user_username`, `user_password`, `user_token`, `user_level`) VALUES
-('USR-631db1cb646b1', 'USR-631db1cb646b1.png', 'สุรพัศ', 'ทิพย์ภักดี', '0648738153', NULL, 'surapat@admin', '$2y$10$hYiz7mZc.XAoS8hgkotCquD8P1hLKrwy55ifYc.W0JiuvSy28LWxq', '$2y$10$7CC4lGHczxfd8rimxM02A.VauRGT7H3odte7TSTap0utje2FIrZeW', 1),
-('USR-632449680c689', 'USR-632449680c689.jpg', 'ศักดิ์ชาย', 'ชื่นเจริญ', '0822569987', 6, 'sakchai@off', '$2y$10$8JbMVhUnxmXh0WiPtICA0u8uXsy1JAb3DwhqLEUe.46r20/e/WSH2', '$2y$10$mGdiAvVC6nhPT2OstMmQNO/i/WNujOQ2NbRu5P189zh2jWpZ5J71a', 2),
-('USR-632449cc29251', 'USR-632449cc29251.jpg', 'ทิวา', 'อนันตเมฆ', '0896662253', 5, 'tiwa@user', '$2y$10$XIC9H/YNJaZO/QPkiyq/POXPjX1VbkUywh1CnVhaVdzw80J2g/HnS', NULL, 3),
-('USR-63252e59ddd51', 'USR-63252e59ddd51.png', 'สมชาย', 'นายช่างคอม', '0892009988', 10, 'somchai@off', '$2y$10$qwFlDWHrujT34pKC/xb9j.TMrB7ZdgH8SWqy774RjqZy6AWsdSRLq', '$2y$10$ytLDan.x7ocddbDHEP1mzu17MHeZgAoX/QtQcWhbA.b7rBUTSB5pC', 2),
-('USR-63269481200d4', 'USR-63269481200d4.jpg', 'ชมพูนุท', 'ชูวัจนา', '0892003374', 3, 'chompoo@user', '$2y$10$JGEtY.8I/0nkm8LoJ/C0uOgyst1ufxyJdxvgubh8EmVD3xQVaF8Gy', '$2y$10$mRqMMKYK7zpwkgYVjkxYoeD6/rWahb/wxFttbuuRUY1UBnyxxCrjS', 3);
+('USR-631db1cb646b1', 'IMG-632ca585b682b.png', 'สุรพัศ', 'ทิพย์ภักดี', '0648738153', NULL, 'surapat@admin', '$2y$10$hYiz7mZc.XAoS8hgkotCquD8P1hLKrwy55ifYc.W0JiuvSy28LWxq', '$2y$10$BkFq5UZJ5jZcKqB4S4SOmO5RyZEoMyYjtaf3j/E5S2ShHZKHQXIGq', 1),
+('USR-632449680c689', 'IMG-632c9742ad547.jpg', 'ศักดิ์ชาย', 'ชื่นเจริญ', '0822569987', 6, 'sakchai@off', '$2y$10$8JbMVhUnxmXh0WiPtICA0u8uXsy1JAb3DwhqLEUe.46r20/e/WSH2', '$2y$10$mGdiAvVC6nhPT2OstMmQNO/i/WNujOQ2NbRu5P189zh2jWpZ5J71a', 2),
+('USR-632449cc29251', 'IMG-632c97374369b.jpg', 'ทิวา', 'อนันตเมฆ', '0896662253', 5, 'tiwa@user', '$2y$10$XIC9H/YNJaZO/QPkiyq/POXPjX1VbkUywh1CnVhaVdzw80J2g/HnS', NULL, 3),
+('USR-63252e59ddd51', 'IMG-632c98531a913.jpg', 'สมชาย', 'นายช่างคอม', '0892009988', 10, 'somchai@off', '$2y$10$qwFlDWHrujT34pKC/xb9j.TMrB7ZdgH8SWqy774RjqZy6AWsdSRLq', '$2y$10$DPFrO/CXPGKzDFemKZoveO5x7k97beTrMqxFsoojkE8XB5LE6QEIC', 2),
+('USR-63269481200d4', 'IMG-632c971e8d9cc.jpg', 'ชมพูนุท', 'ชูวัจนา', '0892003374', 3, 'chompoo@user', '$2y$10$JGEtY.8I/0nkm8LoJ/C0uOgyst1ufxyJdxvgubh8EmVD3xQVaF8Gy', '$2y$10$bPFTJUtRyNAwXt/6AsorfO3JyGDUCCFyVtIUVUvu2gjf8uFxe6tu2', 3);
 
 -- --------------------------------------------------------
 
@@ -360,7 +369,7 @@ ALTER TABLE `user_level`
 -- AUTO_INCREMENT for table `device_type`
 --
 ALTER TABLE `device_type`
-  MODIFY `type_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสประเภทครุภัณฑ์', AUTO_INCREMENT=5;
+  MODIFY `type_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสประเภทครุภัณฑ์', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `request_servey`
@@ -372,7 +381,7 @@ ALTER TABLE `request_servey`
 -- AUTO_INCREMENT for table `request_solving`
 --
 ALTER TABLE `request_solving`
-  MODIFY `solv_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสบันทึกการดำเนินการ', AUTO_INCREMENT=9;
+  MODIFY `solv_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสบันทึกการดำเนินการ', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `servey_list`
@@ -384,7 +393,7 @@ ALTER TABLE `servey_list`
 -- AUTO_INCREMENT for table `servey_topic`
 --
 ALTER TABLE `servey_topic`
-  MODIFY `top_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสหัวข้อการประเมิน', AUTO_INCREMENT=5;
+  MODIFY `top_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสหัวข้อการประเมิน', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `service`

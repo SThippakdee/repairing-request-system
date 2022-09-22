@@ -93,7 +93,7 @@
 												<?php echo $row['top_name'];?>
 											</td>
 											<td class="d-none d-md-table-cell">
-												<?php echo $row['topic_avg'] == "" ? "ยังไม่มีคะแนน" : number_format($row['topic_avg'], 2);?> คะแนน
+												<?php echo $row['topic_avg'] == "" ? "ยังไม่มีการประเมิน" : number_format($row['topic_avg'], 2)." คะแนน";?> 
 											</td>
 											<td class="text-end">
 												<div class="row g-1 p-0">
