@@ -52,6 +52,10 @@
 		.dataTables_filter {
 			display: none;
 		}
+		.active-badge {
+			margin-top: -0.5rem;
+			box-shadow: 0 0.2rem 0.6rem rgb(0 0 0 / 60%);
+		}
 	</STYLE>
 </head>
 
@@ -79,13 +83,13 @@
 											<div class="col-6">
 												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="o-request-new.php">
 													<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
-													เพิ่มรายการ
+													เพิ่ม<span class="d-none d-md-inline">รายการ</span>
 												</a>
 											</div>
 											<div class="col-6">
 												<a id="print" class="btn btn-lg btn-primary w-100 text-nowrap">
 													<i class="fa-solid fa-print fa-lg me-2"></i>
-													พิมพ์รายการ
+													พิมพ์<span class="d-none d-md-inline">รายการ</span>
 												</a>
 											</div>
 										</div>
@@ -111,31 +115,31 @@
 										<thead>
 											<tr>
 												<th colspan="6" class="h5 px-0">
-													<span class="badge bg-secondary py-1">
+													<span class="active-badge my-badge ms-2 badge bg-secondary p-1 clickable" data-group="" onclick="searchCol(4, '')">
 														รายการทั้งหมด
 														<span class="badge bg-light text-dark ms-2 p-1">
 															<?php echo $row["total"];?>
 														</span>
 													</span>
-													<span class="badge bg-warning py-1">
+													<span class="ms-2 my-badge badge bg-warning p-1 clickable" data-group="รอดำเนินการ" onclick="searchCol(4, 'รอดำเนินการ')">
 														รอดำเนินการ
-														<span class="badge bg-light text-dark ms-2 p-1">
+														<span class="badge bg-light text-light text-dark ms-2 p-1">
 															<?php echo $row["waiting"];?>
 														</span>
 													</span>
-													<span class="badge bg-primary py-1">
+													<span class="ms-2 my-badge badge bg-primary p-1 clickable" data-group="กำลังดำเนินการ" onclick="searchCol(4, 'กำลังดำเนินการ')">
 														กำลังดำเนินการ
-														<span class="badge bg-light text-dark ms-2 p-1">
+														<span class="badge bg-light text-dark ms-2 p-1 ">
 															<?php echo $row["inprogress"];?>
 														</span>
 													</span>
-													<span class="badge bg-success py-1">
+													<span class="ms-2 my-badge badge bg-success p-1 clickable" data-group="ดำเนินการเสร็จสิ้น" onclick="searchCol(4, 'ดำเนินการเสร็จสิ้น')">
 														ดำเนินการเสร็จสิ้น
 														<span class="badge bg-light text-dark ms-2 p-1">
 															<?php echo $row["done"];?>
 														</span>
 													</span>
-													<span class="badge bg-danger py-1">
+													<span class="ms-2 my-badge badge bg-danger p-1 clickable" data-group="ยกเลิกรายการ" onclick="searchCol(4, 'ยกเลิกรายการ')">
 														ยกเลิกรายการ
 														<span class="badge bg-light text-dark ms-2 p-1">
 															<?php echo $row["cancelled"];?>

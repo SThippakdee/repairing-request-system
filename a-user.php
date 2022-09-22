@@ -53,6 +53,10 @@
 		.dataTables_filter {
 			display: none;
 		}
+		.active-badge {
+			margin-top: -0.5rem;
+			box-shadow: 0 0.2rem 0.6rem rgb(0 0 0 / 60%);
+		}
 	</STYLE>
 </head>
 
@@ -81,13 +85,13 @@
 											<div class="col-6">
 												<a class="btn btn-lg btn-primary w-100 text-nowrap" href="a-user-new.php">
 													<i class="fa-solid fa-lg fa-file-circle-plus me-2"></i>
-													เพิ่มรายการ
+													เพิ่ม<span class="d-none d-md-inline">รายการ</span>
 												</a>
 											</div>
 											<div class="col-6">
 												<a id="print" class="btn btn-lg btn-primary w-100 text-nowrap">
 													<i class="fa-solid fa-print fa-lg me-2"></i>
-													พิมพ์รายการ
+													พิมพ์<span class="d-none d-md-inline">รายการ</span>
 												</a>
 											</div>
 										</div>
@@ -110,19 +114,19 @@
 									<thead>
 										<tr>
 											<th colspan="6" class="h5 px-0">
-												<span class="badge bg-secondary py-1">
+												<span class="active-badge my-badge ms-2 badge bg-secondary py-1 clickable" data-group="" onclick="searchCol(5, '')">
 													รายการทั้งหมด
-													<span class="badge bg-light text-dark ms-2 p-1">
+													<span class="badge my-badge bg-light text-dark ms-2 p-1">
 														<?php echo $row["total"];?>
 													</span>
 												</span>
-												<span class="badge bg-info py-1">
+												<span class="badge my-badge bg-info py-1 clickable" data-group="ผู้ใช้ระบบ" onclick="searchCol(5, 'ผู้ใช้ระบบ')">
 													ผู้ใช้ระบบ
 													<span class="badge bg-light text-dark ms-2 p-1">
 														<?php echo $row["userCount"];?>
 													</span>
 												</span>
-												<span class="badge bg-primary py-1">
+												<span class="badge my-badge bg-primary py-1 clickable" data-group="ช่างซ่อมบำรุง" onclick="searchCol(5, 'ช่างซ่อมบำรุง')">
 													ช่างซ่อมบำรุง
 													<span class="badge bg-light text-dark ms-2 p-1">
 														<?php echo $row["officerCount"];?>
@@ -203,7 +207,7 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
-	<script src="app/script/table.js"></script>
+	<script src="app/script/table-account.js"></script>
 	<script type="text/javascript">
 		function showDetail(id) {
 			$.ajax({

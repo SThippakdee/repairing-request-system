@@ -51,7 +51,7 @@
 							<a class="sidebar-link" href="a-service.php" data-page="ข้อมูลบริการ">
 								<span class="align-middle ms-2">ข้อมูลบริการ</span>
 							</a>
-							<a class="sidebar-link" href="a-serveyTopic.php" data-page="ข้อมูลการประเมินบริการ">
+							<a class="sidebar-link" href="a-serveytopic.php" data-page="ข้อมูลการประเมินบริการ">
 								<span class="align-middle ms-2">ข้อมูลการประเมินบริการ</span>
 							</a>
 						</li>

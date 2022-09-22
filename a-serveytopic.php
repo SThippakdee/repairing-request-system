@@ -104,7 +104,7 @@
 														</button>
 													</div>
 													<div class="col">
-														<button type="button" class="btn btn-warning w-100"
+														<button type="button" class="btn btn-warning w-100 <?php if($row['top_id']==1) echo "d-none";?>"
 															onclick="del(<?php echo $row['top_id'];?>)">
 															<i class="fa-solid fa-lg fa-trash-can"></i>
 														</button>

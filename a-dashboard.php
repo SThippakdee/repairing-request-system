@@ -276,7 +276,7 @@
 														LEFT JOIN service SV ON RQ.service_id = SV.service_id 
 														LEFT JOIN device_type DT ON RQ.type_id = DT.type_id 
 														LEFT JOIN request_solving RS ON RQ.req_id = RS.req_id
-														ORDER BY req_date DESC LIMIT 7;";
+														ORDER BY req_id DESC LIMIT 7;";
 												$requestData=$repairDB->query($sql);
 
 												if($requestData-> num_rows >0){

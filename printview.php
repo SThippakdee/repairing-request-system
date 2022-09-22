@@ -143,7 +143,9 @@
             $servey=$serveyResult->fetch_assoc();
         }
     ?>
-    
+
+    <u>ส่วนของการประเมินความพึงพอใจหลังรับบริการ</u>
+
     <table class="table w-100 mt-3 p-0 border border-dark">
         <thead>
             <tr>
@@ -206,7 +208,7 @@
     </table>
 
     <div class="row mt-3">
-        <div class="col-12">ข้อเสนอแนะ</div>
+        <div class="col-12">ข้อเสนอแนะจากผู้รับบริการ</div>
         <div class="col"><?php if($record != 0) echo $servey['ser_feedback'];?></div>
     </div>
 

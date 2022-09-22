@@ -52,7 +52,7 @@
                                                     </a>
                                                 </div>
                                                 <br>
-
+                                                <br>
                                                 <form class="user" action="be-checkLogin.php" method="POST">
                                                     <div class="form-group">
                                                         <input type="text" class="form-control form-control-user" name="username"
@@ -64,22 +64,19 @@
                                                         required autocomplete="off" placeholder="Password"
                                                         value="<?php if(isset($_COOKIE["RWeb-token"])) echo $_COOKIE["RWeb-token"];?>">
                                                     </div>
-                                                    <div class="form-group ms-2">
+                                                    <div class="form-group ms-2 mb-5">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="form-check-input" name="remember"
                                                             <?php if(isset($_COOKIE["RWeb-userName"])) echo "checked";?>>
                                                             <label class="form-check-label small ms-1" for="remember">จดจำบัญชีผู้ใช้</label>
                                                         </div>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary btn-user btn-block shadow mb-2 mt-5">
+                                                    <br>
+                                                    <button type="submit" class="btn btn-primary btn-user btn-block shadow mb-2">
                                                         <span class="h6 text-light">เข้าสู่ระบบ</span>
                                                         <i class="fa-solid fa-lg fa-arrow-right-to-bracket ms-2"></i>
                                                     </button>
                                                 </form>
-
-                                                <div class="text-center mt-4">
-                                                    <a class="small" href="#"><i class="fa-solid fa-key me-2"></i>ลืมรหัสผ่าน? รีเซ็ตรหัสผ่านปัจจุบัน</a>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
