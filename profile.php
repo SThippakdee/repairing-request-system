@@ -41,6 +41,10 @@
 		body {
 			font-family: "Kanit"; 
 		}
+		.mini-profile {
+			overflow: hidden;
+			object-fit: cover;
+		}
 		.select2 {
             width:100%!important;
         }
@@ -62,6 +66,8 @@
 		}
 		#profilePic{
 			transition: transform .2s;
+			overflow: hidden;
+			object-fit: cover;
 		}
 		#profilePic:hover{
 			border: 8px solid #2f64b1;
@@ -108,17 +114,9 @@
 									<div class="card-header" style="background-image: url(img/pics/profile-bg.jpg);"> </div>
 									
 									<div class="card-body text-center">
-
-										<form action="be-profile-manage.php" method="POST" enctype="multipart/form-data">
-											<img id="profilePic" class="card-profile-img" src="<?php echo("img/avatars/".$row["user_profile"]);?>">
-											<input id="avatarUpload" name="user_profile" class="d-none" type="file" accept="image/*" 
-												onchange="previewFile(this);"
-											/>
-											<input type="hidden" name="action" value="updateImg"/>
-											<input type="hidden" name="old_profile" value="<?php echo $row["user_profile"];?>"/>
-											<input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>"/>
-											<button id="imgFormSubmit" type="submit" class="d-none"></button>
-										</form>
+										
+										<img id="profilePic" class="card-profile-img" src="<?php echo("img/avatars/".$row["user_profile"]);?>">
+											
 										<div style="border: 4px solid #222e3c; border-radius: 20px; box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);">
 											<h3 class="mt-2"><?php echo($row["user_name"]." ".$row["user_lastname"]);?></h3>
 											<h4>Username: <?php echo $row["user_username"];?></h4>
@@ -140,7 +138,7 @@
 								</div>
 							</div>
 							<div class="col-xl-8">
-								<form id="mainForm" action="be-profile-manage.php" method="POST" class="card card-profile overflow-hidden shadow-lg h-100 mb-0">
+								<form id="mainForm" action="be-profile-manage.php" method="POST" enctype="multipart/form-data" class="card card-profile overflow-hidden shadow-lg h-100 mb-0">
 									<div class="card-header text-center d-table" style="background-image: url(img/pics/profile-bg.jpg);">
 										<div class="d-table-cell align-middle p-0">
 											<h1 class="text-white fw-bold">
@@ -154,10 +152,14 @@
 											<div class="card-body">
 												<h5 class="card-title">ข้อมูลส่วนตัว</h5>
 												<div class="row mt-4">
+
+													<input type="hidden" name="action" value="updateData"/>
+													<input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>"/>
+													<input id="avatarUpload" name="user_profile" class="d-none" type="file" accept="image/*" onchange="previewFile(this);"/>
+													<input type="hidden" name="old_profile" value="<?php echo $row["user_profile"];?>"/>
+
 													<div class="col-12 col-sm-6 mb-2">
 														ชื่อผู้ใช้
-														<input type="hidden" name="action" value="updateData"/>
-														<input type="hidden" name="user_id" value="<?php echo $row["user_id"];?>"/>
 														<input type="text" name="user_name"class="form-control form-control-lg" autocomplete="off" placeholder="ชื่อผู้ใช้"
 														value="<?php echo $row["user_name"];?>" required/>
 													</div>

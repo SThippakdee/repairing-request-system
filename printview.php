@@ -21,6 +21,10 @@
 		body {
 			font-family: "Kanit"; 
 		}
+		.mini-profile {
+			overflow: hidden;
+			object-fit: cover;
+		}
         td, tr, th{
             height: 6px;
         }

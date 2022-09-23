@@ -28,6 +28,10 @@
 		body {
 			font-family: "Kanit"; 
 		}
+		.mini-profile {
+			overflow: hidden;
+			object-fit: cover;
+		}
 		.select2 {
             width:100%!important;
         }
@@ -80,15 +84,8 @@
 									
 									<div class="card-body text-center">
 
-										<form action="be-user-manage.php" method="POST" enctype="multipart/form-data">
-											<img id="profilePic" class="card-profile-img" src="img/avatars/default-avatar.png">
-											<input id="avatarUpload" name="user_profile" class="d-none" type="file" accept="image/*" 
-												onchange="previewFile(this);"
-											/>
-											<input type="hidden" name="action" value="updateImg">
-											<input type="hidden" name="user_id" value="">
-											<button id="imgFormSubmit" type="submit" class="d-none"></button>
-										</form>
+										<img id="profilePic" class="card-profile-img" src="img/avatars/default-avatar.png">
+											
 										<div style="border: 4px solid #222e3c; border-radius: 20px; box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);">
 											<h3 class="mt-2">ชื่อผู้ใช้ นามสกุล</h3>
 											<h4>Username</h4>
@@ -130,10 +127,13 @@
 										<div class="card card-profile shadow-lg mb-0 mt-2 border border-2">
 											<div class="card-body">
 												<h5 class="card-title">ข้อมูลส่วนตัว</h5>
+												
+												<input id="avatarUpload" name="user_profile" class="d-none" type="file" accept="image/*" onchange="previewFile(this);"/>
+												<input type="hidden" name="action" value="addRecord"/>
+
 												<div class="row mt-3">
 													<div class="col-12 col-sm-6 mb-2">
 														ชื่อผู้ใช้
-														<input type="hidden" name="action" value="addRecord"/>
 														<input id="user_name" type="text" name="user_name" class="form-control form-control-lg" autocomplete="off" placeholder="ชื่อผู้ใช้"
 														value="" required/>
 													</div>

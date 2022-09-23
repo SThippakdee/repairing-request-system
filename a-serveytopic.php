@@ -27,6 +27,10 @@
 		body {
 			font-family: "Kanit"; 
 		}
+		.mini-profile {
+			overflow: hidden;
+			object-fit: cover;
+		}
 		.card-profile-img {
 			position: relative;
 			width: 8rem;

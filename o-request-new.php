@@ -28,6 +28,10 @@
 		body {
 			font-family: "Kanit"; 
 		}
+		.mini-profile {
+			overflow: hidden;
+			object-fit: cover;
+		}
         .select2 {
             width:100%!important;
         }

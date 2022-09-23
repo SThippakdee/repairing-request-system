@@ -34,11 +34,28 @@
                 if($result->num_rows>0){
                     echo "alert|Username นี้ถูกใช้โดยบัญชีอื่นแล้ว";
                 }else{
-                    $sql = "INSERT INTO user    (user_id, user_name, user_lastname, user_tel, dep_id, user_username, user_password, user_level)
-                                        VALUES  (?, ?, ?, ?, ?, ?, ?, ?);";
+                    //Check upload avatar img
+                    $user_profile = "default-avatar.png";
+
+                    if(!empty($_FILES['user_profile']['tmp_name'])){
+                        $uploaddir = 'img/avatars/';
+                        
+                        //Upload Img
+                        list($name, $extension) = explode(".", $_FILES['user_profile']['name']);
+                        $name = uniqid("IMG-");
+                        $file=sprintf("%s.%s", $name, $extension);                                
+                        $uploadfile = $uploaddir . $file;
+                        if (copy($_FILES['user_profile']['tmp_name'], $uploadfile)) {
+                            $user_profile = $file;        
+                        }   
+                    }
+
+                    //Insert Data
+                    $sql = "INSERT INTO user    (user_profile, user_id, user_name, user_lastname, user_tel, dep_id, user_username, user_password, user_level)
+                                        VALUES  (?, ?, ?, ?, ?, ?, ?, ?, ?);";
                     $stmt =  $repairDB->stmt_init(); 
                     $stmt->prepare($sql);
-                    $stmt->bind_param('ssssissi', $user_id, $user_name, $user_lastname, $user_tel, $dep_id, $user_username, $user_password, $user_level);
+                    $stmt->bind_param('sssssissi', $user_profile, $user_id, $user_name, $user_lastname, $user_tel, $dep_id, $user_username, $user_password, $user_level);
                     if($stmt->execute()){
                         $_SESSION["RWeb-paramID"] = $user_id;
                         echo "success";
@@ -71,10 +88,34 @@
             if($result->num_rows>0){
                 echo "alert|Username นี้ถูกใช้โดยบัญชีอื่นแล้ว";
             }else{
-                $sql = "UPDATE user SET user_name = ?, user_lastname = ?, user_tel = ?, dep_id = ?, user_username = ?, user_level = ? WHERE user_id = ?;";
+                //Check update avatar img
+                $old_profile = $_POST['old_profile'];
+                $user_profile = $old_profile;
+
+                if(!empty($_FILES['user_profile']['tmp_name'])){
+                    $uploaddir = 'img/avatars/';
+                    
+                    //Upload Img
+                    list($name, $extension) = explode(".", $_FILES['user_profile']['name']);
+                    $name = uniqid("IMG-");
+                    $file=sprintf("%s.%s", $name, $extension);                                
+                    $uploadfile = $uploaddir . $file;
+                    if (copy($_FILES['user_profile']['tmp_name'], $uploadfile)) {
+                        $user_profile = $file;
+
+                        //Delete old avatar img
+                        if($old_profile != "default-avatar.png"){
+                            $old_profile = sprintf("img/avatars/%s", $old_profile);
+                            unlink($old_profile);
+                        }           
+                    }   
+                }
+
+                //Update Data
+                $sql = "UPDATE user SET user_profile = ?, user_name = ?, user_lastname = ?, user_tel = ?, dep_id = ?, user_username = ?, user_level = ? WHERE user_id = ?;";
                 $stmt =  $repairDB->stmt_init(); 
                 $stmt->prepare($sql);
-                $stmt->bind_param('sssisis', $user_name, $user_lastname, $user_tel, $dep_id, $user_username, $user_level, $user_id);
+                $stmt->bind_param('ssssisis', $user_profile, $user_name, $user_lastname, $user_tel, $dep_id, $user_username, $user_level, $user_id);
                 if($stmt->execute()){
                     echo "success";
                 }else{
@@ -99,48 +140,6 @@
             }else{
                 die("alert|ไม่สามารถรีเซ็ตรหัสผ่านได้ :". $repairDB->error);
             } 
-        }
-
-        //Update Profile Img
-        if($action == "updateImg"){
-            if(!empty($_FILES['user_profile']['tmp_name'])){
-                $user_id = $_POST['user_id']; 
-                $old_profile = $_POST['old_profile'];
-                
-                if($user_id == ""){
-                    $user_id = $_SESSION["RWeb-paramID"];
-                }
-
-                $uploaddir = 'img/avatars/';
-                $user_profile = "default-avatar.png";
-                
-                //Upload Img
-                list($name, $extension) = explode(".", $_FILES['user_profile']['name']);
-                $name = uniqid("IMG-");
-                $file=sprintf("%s.%s", $name, $extension);                                
-                $uploadfile = $uploaddir . $file;
-                if (copy($_FILES['user_profile']['tmp_name'], $uploadfile)) {
-                    $user_profile = $file;
-
-                    //Delete old avatar img
-                    if($old_profile != "default-avatar.png"){
-                        $old_profile = sprintf("img/avatars/%s", $old_profile);
-                        unlink($old_profile);
-                    }
-
-                    $sql = "UPDATE user SET user_profile = ? WHERE user_id = ?;";
-                    $stmt =  $repairDB->stmt_init(); 
-                    $stmt->prepare($sql);
-                    $stmt->bind_param('ss', $user_profile, $user_id);
-                    if($stmt->execute()){
-                        header("location:javascript://history.go(-1)");
-                    }else{
-                        die("alert|ไม่สามารถเปลี่ยนรูปโปรไฟล์ได้ :". $repairDB->error);
-                    }               
-                }   
-            }else{
-                header("location:javascript://history.go(-1)");
-            }
         }
 
         //View Profile

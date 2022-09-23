@@ -3,13 +3,16 @@ $('#mainForm').submit(function(e){
 	e.preventDefault();
 	var form = $(this);
 	var actionUrl = form.attr('action');
+	var form_data = new FormData($('#mainForm')[0]);
+	
 	$.ajax({
 		type:'post',
 		url:actionUrl,
-		data:form.serialize(),
+		data:form_data,
+		processData: false,
+    	contentType: false,
 		success:function(data) {
 			if(data == "success"){
-				uploadProfile();
 				Swal.fire({
 					icon: 'success',
 					showConfirmButton: false,
@@ -34,14 +37,6 @@ $('#mainForm').submit(function(e){
 		}
 	});
 });
-
-//Update profile img
-function uploadProfile(){
-	var file = $("input[type=file]").get(0).files[0];
-	if(file){
-		$('#imgFormSubmit').click();
-	}
-}
 
 //Reset password
 function resetPass(id){
