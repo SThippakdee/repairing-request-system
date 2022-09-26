@@ -1,0 +1,118 @@
+var id;
+var name;
+var action;
+var url = "be-serveytopic-manage.php";
+
+//add new servey topic
+function add(){
+	Swal.fire({
+        title: 'เพิ่มรายการใหม่',
+		input: 'text',
+		html:'<div class="mt-0"></div>',
+		inputValue: '',
+		inputPlaceholder: 'หัวข้อการประเมิน',
+		reverseButtons: true,
+        showCancelButton: true,
+        cancelButtonColor: 'white',
+        cancelButtonText: '<span class="text-dark">ยกเลิกรายการ</span>',
+        confirmButtonColor: window.theme.primary,
+        confirmButtonText: '<span class="text-light">เพิ่มรายการ</span>',
+  		inputValidator: (value) => {
+			if (!value) {
+				return 'กรุณาระบุหัวข้อการประเมิน'
+			}else{
+				id = "-";
+				name = value;
+				action = "add";
+			}
+  		}
+    }).then((result) => {
+		if (result.isConfirmed) {
+			lunchAjax(id, name, action, url);
+		}
+	})
+}
+
+//edit servey topic
+function edit(paramID, paramName){
+	Swal.fire({
+        title: 'แก้ไขรายการ',
+		input: 'text',
+		html:'<div class="mt-0"></div>',
+		inputValue: paramName,
+		inputPlaceholder: 'หัวข้อการประเมิน',
+		reverseButtons: true,
+        showCancelButton: true,
+        cancelButtonColor: 'white',
+        cancelButtonText: '<span class="text-dark">ยกเลิกรายการ</span>',
+        confirmButtonColor: window.theme.primary,
+        confirmButtonText: '<span class="text-light">แก้ไขรายการ</span>',
+  		inputValidator: (value) => {
+			if (!value) {
+				return 'กรุณาระบุหัวข้อการประเมิน'
+			}else{
+				id = paramID;
+				name = value;
+				action = "edit";
+			}
+  		}
+    }).then((result) => {
+		if (result.isConfirmed) {
+			lunchAjax(id, name, action, url);
+		}
+	})
+}
+
+//delete servey topic
+function del(paramID){
+	Swal.fire({
+		icon: 'warning',
+		title: 'ลบรายการ',
+		text: "รายการแจ้งซ่อมที่เกี่ยวข้องจะถูกนำรายการประเมินนี้ออก",
+		reverseButtons: true,
+		showCancelButton: true,
+		cancelButtonColor: 'white',
+		cancelButtonText: '<span class="text-dark">ยกเลิก</span>',
+		confirmButtonColor: window.theme.primary,
+		confirmButtonText: '<span class="text-light">ลบรายการ</span>'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			id = paramID;
+			action = "delete";
+			lunchAjax(id, name, action, url);
+		}
+	})
+}
+
+//lunch Ajax
+function lunchAjax(id, name, action, url){
+	$.ajax({
+		type:'post',
+		url: url,
+		data: {dataID: id, dataName: name, dataAction: action},
+		success:function(data) {
+			if(data == "success"){
+				Swal.fire({
+					icon: 'success',
+					showConfirmButton: false,
+					title: 'ดำเนินการสำเร็จ',
+					timer: 2000,
+					timerProgressBar: true
+				}).then((result) => {
+					if (result.dismiss) {
+						window.location.reload();
+					}
+				})  
+			}
+			else{
+				var msg = data.split("|");
+				Swal.fire({
+					icon: 'error',
+					title: 'เกิดข้อผิดพลาด',
+					text: msg[1],
+					showConfirmButton: false
+				})
+			}
+		}
+	});
+}
