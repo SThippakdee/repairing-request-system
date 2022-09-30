@@ -33,6 +33,7 @@
                 $stmt->prepare($sql);
                 $stmt->bind_param('sssi', $solv_detail, $solv_note, $solv_date, $solv_id);
                 if($stmt->execute()){
+                    $_SESSION["RWeb-paramID"] = $req_id;
                     echo "success";
                 }else{
                     die("alert|ไม่สามารถอัพเดทรายการได้ :". $repairDB->error);

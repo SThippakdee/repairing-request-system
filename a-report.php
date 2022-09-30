@@ -74,34 +74,50 @@
 						<div class="col-12">
 							<div class="card shadow-lg">
 								<div class="card-body">
-									<h5 class="card-title">รายงานการการแจ้งซ่อม</h5>
 									<div class="row">
 										<div class="col mt-2">
 
 											<?php 
 												$start = isset($_SESSION["RWeb-start"]) ? $_SESSION["RWeb-start"] : "2022-01-01";
 												$end = isset($_SESSION["RWeb-end"]) ? $_SESSION["RWeb-end"] : date('Y-m-d');
+												$barcolor = isset($_SESSION["RWeb-color"]) ? $_SESSION["RWeb-color"] : "#0c5eac";
+												$limit = isset($_SESSION["RWeb-limit"]) ? $_SESSION["RWeb-limit"] : 5;
 											?>
 
 											<form method = "post" action="be-report.php">
 												<div class="row g-2 mb-3">
-													<div class="col-12 col-md-6">
+													<div class="col-12 col-md-6 col-xxl-3">
 														วันที่เริ่มต้น
 														<input id="start" type="date" name="report_start" class="form-control form-control-lg"
-														value="<?php echo isset($_SESSION["RWeb-start"]) ? $_SESSION["RWeb-start"] : '2022-01-01'?>" 
+														value="<?php echo $start;?>" 
 														min="2022-01-01" max="<?php echo date('Y-m-d');?>">
 													</div>
-													<div class="col-12 col-md-6">
+													<div class="col-12 col-md-6 col-xxl-3">
 														วันที่สิ้นสุด
 														<input id="end" type="date" name="report_end" class="form-control form-control-lg"
-														value="<?php echo isset($_SESSION["RWeb-end"]) ? $_SESSION["RWeb-end"] : date('Y-m-d');?>" 
-														min="<?php echo isset($_SESSION["RWeb-start"]) ? $_SESSION["RWeb-start"] : '2022-01-01'?>"
+														value="<?php echo $end;?>" 
+														min="<?php echo $start;?>"
 														max="<?php echo date('Y-m-d');?>">
 													</div>
-												</div>
-												<div class="row g-2 mb-1 justify-content-end">
-													<div class="col-12 col-md-3">
-														<button type="submit" class="btn btn-primary w-100">สร้างรายงาน</button>
+													<div class="col-12 col-md-6 col-xxl-3">
+														จำกัดการแสดงผล
+														<select class="form-select form-control-lg" name="report_limit">
+															<option <?php echo $limit== 5 ? "selected" : "";?> value="5">5 รายการ</option>
+															<option <?php echo $limit== 7 ? "selected" : "";?> value="7">7 รายการ</option>
+															<option <?php echo $limit== 10 ? "selected" : "";?> value="10">10 รายการ</option>
+														</select>
+													</div>
+													<div class="col-12 col-md-6 col-xxl-3">
+														กำหนดสีรายงาน
+														<div class="row g-1">
+															<div class="col-6">
+																<input type="color" name="report_color" class="form-control form-control-color w-100 form-control-lg"
+														 		id="exampleColorInput" value="<?php echo $barcolor;?>">
+															</div>
+															<div class="col-6">
+																<button type="submit" class="btn btn-primary w-100 h-100"><i class="me-2 fa-solid fa-arrow-rotate-right"></i>Refresh</button>
+															</div>
+														</div>
 													</div>
 												</div>
 											</form>
@@ -113,7 +129,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-12 col-xl-6">
+						<div class="col-12 col-xxl-6">
 							<div class="card shadow-lg">
 								<div class="card-body">
 									<div class="row">
@@ -121,8 +137,8 @@
 											<h5 class="card-title">จำนวนรายการแจ้งซ่อม แยกตามบริการ</h5>
 										</div>
 										<div class="col-3">
-											<a class="btn btn-primary float-end" onclick="saveCanvas('#chartjs-groupByService')">
-												<i class="me-1 ms-1 fa-solid fa-cloud-arrow-down"></i>
+											<a class="btn btn-outline-primary float-end" onclick="saveCanvas('#chartjs-groupByService')">
+												<i class="fa-solid fa-cloud-arrow-down"></i><span class="ms-2 d-none d-md-inline">save</span>
 											</a>
 										</div>
 									</div>
@@ -132,7 +148,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 col-xl-6">
+						<div class="col-12 col-xxl-6">
 							<div class="card shadow-lg">
 								<div class="card-body">
 									<div class="row">
@@ -140,8 +156,8 @@
 											<h5 class="card-title">จำนวนรายการแจ้งซ่อม แยกตามหน่วยงาน</h5>
 										</div>
 										<div class="col-3">
-											<a class="btn btn-primary float-end" onclick="saveCanvas('#chartjs-groupByDep')">
-												<i class="me-1 ms-1 fa-solid fa-cloud-arrow-down"></i>
+											<a class="btn btn-outline-primary float-end" onclick="saveCanvas('#chartjs-groupByDep')">
+												<i class="fa-solid fa-cloud-arrow-down"></i><span class="ms-2 d-none d-md-inline">save</span>
 											</a>
 										</div>
 									</div>
@@ -151,7 +167,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 col-xl-6">
+						<div class="col-12 col-xxl-6">
 							<div class="card shadow-lg">
 								<div class="card-body">
 									<div class="row">
@@ -159,8 +175,8 @@
 											<h5 class="card-title">จำนวนรายการแจ้งซ่อม แยกตามประเภท</h5>
 										</div>
 										<div class="col-3">
-											<a class="btn btn-primary float-end" onclick="saveCanvas('#chartjs-groupByType')">
-												<i class="me-1 ms-1 fa-solid fa-cloud-arrow-down"></i>
+											<a class="btn btn-outline-primary float-end" onclick="saveCanvas('#chartjs-groupByType')">
+												<i class="fa-solid fa-cloud-arrow-down"></i><span class="ms-2 d-none d-md-inline">save</span>
 											</a>
 										</div>
 									</div>
@@ -170,7 +186,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-12 col-xl-6">
+						<div class="col-12 col-xxl-6">
 							<div class="card shadow-lg">
 								<div class="card-body">
 									<div class="row">
@@ -178,8 +194,8 @@
 											<h5 class="card-title">จำนวนรายการแจ้งซ่อม แยกตามสถานะ</h5>
 										</div>
 										<div class="col-3">
-											<a class="btn btn-primary float-end" onclick="saveCanvas('#chartjs-groupByStatus')">
-												<i class="me-1 ms-1 fa-solid fa-cloud-arrow-down"></i>
+											<a class="btn btn-outline-primary float-end" onclick="saveCanvas('#chartjs-groupByStatus')">
+												<i class="fa-solid fa-cloud-arrow-down"></i><span class="ms-2 d-none d-md-inline">save</span>
 											</a>
 										</div>
 									</div>
@@ -201,7 +217,6 @@
 	</div>
 
 	<script src="app/script/sidebar.js"></script>
-	<script src="app/script/request-manage.js"></script>
 	<script>
 		//Date picker min/max
 		$("#start").change(function(){
@@ -233,12 +248,6 @@
 		}
 
 		//Chart
-		<?php 
-			function randomColor() { 
-				return 'rgb(' . rand(50, 255) . ',' . rand(50, 255) . ',255)';
-	   		}
-		?>
-
 		document.addEventListener("DOMContentLoaded", function() {
 			const config = {
 								maintainAspectRatio: false,
@@ -257,13 +266,15 @@
 				$sql = "	SELECT service_name, count(*) as req_count 
 							FROM request R LEFT JOIN service S ON R.service_id = S.service_id
 						 	WHERE req_date BETWEEN '$start' AND '$end' 
-							GROUP BY service_name;";
+							GROUP BY service_name
+							ORDER BY req_count DESC
+							Limit $limit;";
 				$chartResult1 = $repairDB->query($sql);
 				
 				while($chart1=$chartResult1->fetch_assoc()){
 					$req_label1[] = ($chart1["service_name"]!="") ? $chart1["service_name"] : "บริการถูกนำออกแล้ว";
                     $req_count1[] = $chart1["req_count"];
-					$color1[] = randomColor();
+					$color1[] = $barcolor;
 				}
 				
 				if(empty($req_label1)) $req_label1[] = "";
@@ -291,13 +302,15 @@
 				$sql = "	SELECT dep_name, count(*) as req_count 
 							FROM request R LEFT JOIN user U ON R.user_id = U.user_id LEFT JOIN user_dep D ON U.dep_id = D.dep_id
 						 	WHERE req_date BETWEEN '$start' AND '$end' 
-							GROUP BY dep_name;";
+							GROUP BY dep_name
+							ORDER BY req_count DESC
+							Limit $limit;";
 				$chartResult2 = $repairDB->query($sql);
 				
 				while($chart2=$chartResult2->fetch_assoc()){
 					$req_label2[] = ($chart2["dep_name"]!="") ? $chart2["dep_name"] : "ไม่มีหน่วยงาน";
                     $req_count2[] = $chart2["req_count"];
-					$color2[] = randomColor();
+					$color2[] = $barcolor;
 				}
 				
 				if(empty($req_label2)) $req_label2[] = "";
@@ -325,13 +338,15 @@
 				$sql = "	SELECT type_name, count(*) as req_count 
 							FROM request R LEFT JOIN device_type D ON R.type_id = D.type_id
 						 	WHERE req_date BETWEEN '$start' AND '$end' 
-							GROUP BY type_name;";
+							GROUP BY type_name
+							ORDER BY req_count DESC
+							Limit $limit;";
 				$chartResult3 = $repairDB->query($sql);
 				
 				while($chart3=$chartResult3->fetch_assoc()){
 					$req_label3[] = ($chart3["type_name"]!="") ? $chart3["type_name"] : "หน่วยงานถูกนำออกแล้ว";
                     $req_count3[] = $chart3["req_count"];
-					$color3[] = randomColor();
+					$color3[] = $barcolor;
 				}
 				
 				if(empty($req_label3)) $req_label3[] = "";
@@ -359,13 +374,15 @@
 				$sql = "	SELECT req_status, count(*) as req_count 
 							FROM request 
 							WHERE req_date BETWEEN '$start' AND '$end' 
-							GROUP BY req_status;";
+							GROUP BY req_status
+							ORDER BY req_count DESC
+							Limit $limit;";
 				$chartResult4 = $repairDB->query($sql);
 				
 				while($chart4=$chartResult4->fetch_assoc()){
 					$req_label4[] = $chart4["req_status"];
                     $req_count4[] = $chart4["req_count"];
-					$color4[] = randomColor();
+					$color4[] = $barcolor;
 				}
 				
 				if(empty($req_label4)) $req_label4[] = "";

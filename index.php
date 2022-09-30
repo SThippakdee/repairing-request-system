@@ -34,7 +34,7 @@
     <body style="background-color: #222e3c;">
         <main class="d-flex w-100">
             <div class="container d-flex flex-column">
-                <div class="row vh-100">
+                <div class="row vh-100 p-0">
                     <div class="col-xl-10 col-lg-12 col-md-9 mx-auto d-table h-100">
                         <div class="d-table-cell align-middle">
                             
@@ -44,7 +44,7 @@
                                         <div class="col-lg-6 d-none d-lg-block p-0 h-100">
                                             <div class="d-table h-100">
                                                 <div class="d-table-cell align-middle">
-                                                    <img class="img-fluid" src="img/pics/login-cover-pic.jpg">
+                                                    <img class="img-fluid" src="img/pics/body/login-cover-pic.jpg">
                                                 </div>
                                             </div>
                                         </div>

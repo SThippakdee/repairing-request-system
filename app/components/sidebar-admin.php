@@ -60,6 +60,9 @@
 							<a class="sidebar-link" href="a-serveytopic.php" data-page="ข้อมูลการประเมินบริการ">
 								<span class="align-middle ms-2">ข้อมูลการประเมินบริการ</span>
 							</a>
+							<a class="sidebar-link" href="a-notify.php" data-page="ตั้งค่าการแจ้งเตือน">
+								<span class="align-middle ms-2">ตั้งค่าการแจ้งเตือน</span>
+							</a>
 						</li>
 					</ul>
 					<li class="sidebar-item"> 

@@ -76,7 +76,42 @@
 				<div class="container-fluid p-0">
 					<!--Start Content-->
 					<h3 id="pageName" class="fw-bold mb-3">รายการแจ้งซ่อมของฉัน</h3>
+					<div class="row">
+						<div class="col-12">
+							<div class="card shadow-lg">
+								<div class="card-body">
+									<div class="row">
+										<div class="col mt-2">
 
+												<div class="row g-2 mb-3">
+													<div class="col-12 col-md-3 col-xxl-3">
+														วันที่เริ่มต้น
+														<input id="start" type="date" name="report_start" class="form-control form-control-lg"
+														value="2022-01-01" 
+														min="2022-01-01" max="<?php echo date('Y-m-d');?>">
+													</div>
+													<div class="col-12 col-md-3 col-xxl-3">
+														วันที่สิ้นสุด
+														<input id="end" type="date" name="report_end" class="form-control form-control-lg"
+														value="<?php echo date('Y-m-d');;?>" 
+														min="2022-01-01"
+														max="<?php echo date('Y-m-d');?>">
+													</div>
+													<div class="col-12 col-md-6">
+														ค้นหาข้อมูล
+														<div class="input-group">
+															<input id="searchWord" class="form-control form-control-lg" type="text" placeholder="ค้นหาจากคำ..." autofocus autocomplete="off">
+															<button class="btn btn-primary" onclick="window.location.reload()">Reset</button>
+														</div>
+													</div>
+												</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<div class="row row-cols-1 g-4">
 						<div class="col">
 							<div class="card h-100 shadow-lg">
@@ -97,9 +132,6 @@
 												</a>
 											</div>
 										</div>
-									</div>
-									<div class="col-12 col-lg-6">
-										<input id="searchWord" class="form-control form-control-lg" type="text" placeholder="ค้นหา..." autofocus autocomplete="off">
 									</div>
 									<hr>
 								</div>
@@ -235,6 +267,32 @@
 	<script src="app/script/sidebar.js"></script>
 	<script src="app/script/table.js"></script>
 	<script src="app/script/request-manage-u.js"></script>
+	<script type="text/javascript">
+		$("#start").change(function(){
+			min = document.getElementById("start").value
+			document.getElementById("end").setAttribute("min", min);
+			document.getElementById("end").value = document.getElementById("end").max;
+		});
+
+		//Filter date range
+		$.fn.dataTable.ext.search.push(
+			function( settings, data, dataIndex ) {
+				var min = new Date($("#start").val());
+				var max = new Date($("#end").val());
+				var arrStrDate = (data[0]).split("/");
+				var strDate = arrStrDate[2]+"-"+arrStrDate[1]+"-"+arrStrDate[0];
+				var date = new Date(strDate);
+				if ( min <= date && date <= max) {
+					return true;
+				}
+				return false;
+			}
+		);
+
+		$("#start, #end").change(function(){
+        	table.draw();
+    	});
+	</script>
 </body>
 </html>
 <?php $repairDB->close(); ?>

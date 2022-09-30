@@ -141,6 +141,7 @@ function deleteReq(paramID){
 	})
 }
 
+//Approve request
 function approveReq(paramID, officerID){
 	Swal.fire({
 		icon: 'question',
@@ -168,7 +169,7 @@ function approveReq(paramID, officerID){
 							timerProgressBar: true
 						}).then((result) => {
 							if (result.dismiss) {
-								window.location.href = "o-resolv.php";
+								window.location.href="o-resolv-manage.php";
 							}
 						})  
 					}

@@ -153,7 +153,7 @@
 													</div>
 												</div>
 												<h1 class="mt-1 mb-4">
-													<span class="text-primary"><?php echo $row["count_user"]!="" ? number_format($row["count_user"], 2) : "ยังไม่มีคะแนน" ;?></span>
+													<span class="text-primary"><?php echo $row["avg_servey"]!="" ? number_format($row["avg_servey"], 2) : "ยังไม่มีคะแนน" ;?></span>
 													<i class="fa-solid fa-star text-warning"></i>
 												</h1>
 												<hr class="mt-4 mb-2 text-center text-primary" style="height: 4px;">
@@ -295,7 +295,7 @@
 												<td>
 													<?php echo $request["user_name"]."  ".$request["user_lastname"];?> <br>
 													<span class="small text-secondary d-inline-block text-truncate" style="max-width: 180px;">
-														<?php echo $request["dep_name"] != "" ? $request["dep_name"] : "ไม่มีแผนก/หน่วยงาน";?>
+														<?php echo $request["dep_name"] != "" ? $request["dep_name"] : "ไม่มีหน่วยงาน/แผนก";?>
 													</span>
 												</td>
 

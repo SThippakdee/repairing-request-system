@@ -3,6 +3,10 @@ var table = $('#table').DataTable({
     scrollX: true,
     lengthChange: false,
     order: [],
+    "columnDefs": [{
+        "targets": [0],
+        "orderable": false
+    }],
     searching: true,
     dom: 'Bfrtip',
     buttons: [

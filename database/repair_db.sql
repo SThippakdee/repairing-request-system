@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2022 at 12:56 AM
+-- Generation Time: Sep 30, 2022 at 07:58 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -47,6 +47,26 @@ INSERT INTO `device_type` (`type_id`, `type_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notify_setting`
+--
+
+CREATE TABLE `notify_setting` (
+  `noti_id` int(5) NOT NULL,
+  `noti_token` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `noti_type` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `noti_active` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `notify_setting`
+--
+
+INSERT INTO `notify_setting` (`noti_id`, `noti_token`, `noti_type`, `noti_active`) VALUES
+(1, '2gzP4iAJKFyqt7wbnfSvnY6SVQImD25nznjZIZ32JRG', 'insert', 'on');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `request`
 --
 
@@ -76,9 +96,13 @@ INSERT INTO `request` (`req_id`, `user_id`, `service_id`, `type_id`, `dev_serial
 ('REQ-6326b99ea5db6', 'USR-63269481200d4', 2, 3, '', '2022-09-18', 'สายคีย์บอร์ดขาด', 'ยกเลิกรายการ'),
 ('REQ-6326c4655651a', 'USR-63269481200d4', 1, 2, '', '2022-09-18', 'จอกระพริบตลอดเวลา รีบูทเครื่องแล้วก็ยังเป็นอยู่', 'ดำเนินการเสร็จสิ้น'),
 ('REQ-6327b88483e28', 'USR-63269481200d4', 1, 1, 'COM-17725', '2022-09-19', 'เคสคอมพิวเตอร์ขึ้นสนิม', 'กำลังดำเนินการ'),
-('REQ-632be7c007a04', 'USR-631db1cb646b1', 1, 2, 'COM-6320014', '2022-09-22', 'จอไม่ติด แต่ไฟเข้าปกติ', 'รอดำเนินการ'),
+('REQ-632be7c007a04', 'USR-631db1cb646b1', 1, 2, 'COM-6320014', '2022-09-22', 'จอไม่ติด แต่ไฟเข้าปกติ', 'กำลังดำเนินการ'),
 ('REQ-632c9a6fd6c57', 'USR-63252e59ddd51', 3, 6, '', '2022-09-23', 'Router ไฟสถานะไม่ติด', 'รอดำเนินการ'),
-('REQ-632c9db3a333e', 'USR-63269481200d4', 2, 5, '', '2022-09-23', 'หมึกไม่ออกเมื่อพิมพ์เอกสารสีไปประมาณ 5 แผ่น', 'กำลังดำเนินการ');
+('REQ-632c9db3a333e', 'USR-63269481200d4', 2, 5, '', '2022-09-23', 'หมึกไม่ออกเมื่อพิมพ์เอกสารสีไปประมาณ 5 แผ่น', 'กำลังดำเนินการ'),
+('REQ-6337258d094ef', 'USR-631db1cb646b1', 2, 5, '', '2022-10-01', 'Printer ที่ออฟฟิศเสีย', 'รอดำเนินการ'),
+('REQ-633726d03deb8', 'USR-6337262134124', 2, 3, '', '2022-10-01', 'ไมโครโฟนตั้งโต๊ะห้อง 303 เสียงเบาผิดปกติ', 'รอดำเนินการ'),
+('REQ-6337271258b89', 'USR-6337262134124', 2, 3, '', '2022-10-01', 'Webcam ห้อง Video Conference ไม่สามารถเปิดได้ หน้าจอเป็นสีดำ', 'รอดำเนินการ'),
+('REQ-6337275c9dedc', 'USR-6337262134124', 2, 3, '', '2022-10-01', 'ลำโพงห้องประชุม 3 มีเสียงช็อต ไม่สามารถใช้งานได้', 'รอดำเนินการ');
 
 -- --------------------------------------------------------
 
@@ -130,7 +154,8 @@ INSERT INTO `request_solving` (`solv_id`, `req_id`, `solv_detail`, `solv_note`, 
 (6, 'REQ-6327b88483e28', NULL, NULL, 'USR-63252e59ddd51', '2022-09-19'),
 (7, 'REQ-6326c4655651a', 'แก้ไขแล้วโดยการติดตั้ง Window ใหม่', '', 'USR-63252e59ddd51', '2022-09-19'),
 (9, 'REQ-63244aa988ef', NULL, NULL, 'USR-63252e59ddd51', '2022-09-23'),
-(10, 'REQ-632c9db3a333e', NULL, NULL, 'USR-63252e59ddd51', '2022-09-23');
+(10, 'REQ-632c9db3a333e', NULL, NULL, 'USR-63252e59ddd51', '2022-09-23'),
+(11, 'REQ-632be7c007a04', NULL, NULL, 'USR-632449680c689', '2022-09-29');
 
 -- --------------------------------------------------------
 
@@ -228,12 +253,13 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_profile`, `user_name`, `user_lastname`, `user_tel`, `dep_id`, `user_username`, `user_password`, `user_token`, `user_level`) VALUES
-('USR-631db1cb64111', 'default-avatar.png', 'Reserv', 'Admin Account', '-', NULL, 'reserv@admin', '$2y$10$hYiz7mZc.XAoS8hgkotCquD8P1hLKrwy55ifYc.W0JiuvSy28LWxq', '$2y$10$mSPIGz.56s922CRTNG1TPuEf38V0MDGcyfqhdkopxjb1liKxr/KWS', 1),
-('USR-631db1cb646b1', 'IMG-632dfd5c0aef7.jpg', 'สุรพัศ', 'ทิพย์ภักดี', '0648738153', NULL, 'surapat@admin', '$2y$10$hYiz7mZc.XAoS8hgkotCquD8P1hLKrwy55ifYc.W0JiuvSy28LWxq', '$2y$10$oxObasoIM4CnqlO8DZEpmeEyvBL3eyfgnSfr6iCEsLHfFZRYZVG0.', 1),
-('USR-632449680c689', 'IMG-632c9742ad547.jpg', 'ศักดิ์ชาย', 'ชื่นเจริญ', '0822569987', 6, 'sakchai@off', '$2y$10$8JbMVhUnxmXh0WiPtICA0u8uXsy1JAb3DwhqLEUe.46r20/e/WSH2', '$2y$10$mGdiAvVC6nhPT2OstMmQNO/i/WNujOQ2NbRu5P189zh2jWpZ5J71a', 2),
+('USR-631db1cb64111', 'default-avatar.png', 'Reserv', 'Admin Account', '-', NULL, 'reserv@admin', '$2y$10$hYiz7mZc.XAoS8hgkotCquD8P1hLKrwy55ifYc.W0JiuvSy28LWxq', '$2y$10$xM9bu6KmDOj976nC3oXCxuxNSLuvPvzTBsp1S9LTRlzue0RFY7oPG', 1),
+('USR-631db1cb646b1', 'IMG-632dfd5c0aef7.jpg', 'สุรพัศ', 'ทิพย์ภักดี', '0648738153', NULL, 'surapat@admin', '$2y$10$hYiz7mZc.XAoS8hgkotCquD8P1hLKrwy55ifYc.W0JiuvSy28LWxq', '', 1),
+('USR-632449680c689', 'IMG-632c9742ad547.jpg', 'ศักดิ์ชาย', 'ชื่นเจริญ', '0822569987', 6, 'sakchai@off', '$2y$10$8JbMVhUnxmXh0WiPtICA0u8uXsy1JAb3DwhqLEUe.46r20/e/WSH2', '', 2),
 ('USR-632449cc29251', 'IMG-632df89f19d22.jpg', 'ทิวา', 'อนันตเมฆ', '0896662253', 5, 'tiwa@user', '$2y$10$XIC9H/YNJaZO/QPkiyq/POXPjX1VbkUywh1CnVhaVdzw80J2g/HnS', NULL, 3),
-('USR-63252e59ddd51', 'IMG-632c98531a913.jpg', 'สมชาย', 'นายช่างคอม', '0892009988', 10, 'somchai@off', '$2y$10$qwFlDWHrujT34pKC/xb9j.TMrB7ZdgH8SWqy774RjqZy6AWsdSRLq', '', 2),
-('USR-63269481200d4', 'IMG-632dfe74c1a27.jpg', 'ชมพูนุท', 'ชูวัจนา', '0892003374', 3, 'chompoo@user', '$2y$10$JGEtY.8I/0nkm8LoJ/C0uOgyst1ufxyJdxvgubh8EmVD3xQVaF8Gy', '$2y$10$bPFTJUtRyNAwXt/6AsorfO3JyGDUCCFyVtIUVUvu2gjf8uFxe6tu2', 3);
+('USR-63252e59ddd51', 'IMG-632c98531a913.jpg', 'สมชาย', 'นายช่างคอม', '0892009988', 10, 'somchai@off', '$2y$10$qwFlDWHrujT34pKC/xb9j.TMrB7ZdgH8SWqy774RjqZy6AWsdSRLq', '$2y$10$FarjP3L2VKhxCDMQ26xbiOBRlHD2HzRzoP5.WIAhH6JrAWBQY.r1W', 2),
+('USR-63269481200d4', 'IMG-632dfe74c1a27.jpg', 'ชมพูนุท', 'ชูวัจนา', '0892003374', 3, 'chompoo@user', '$2y$10$JGEtY.8I/0nkm8LoJ/C0uOgyst1ufxyJdxvgubh8EmVD3xQVaF8Gy', '$2y$10$cmD0C4t7E0VcE18firZQh.fSAXtdNlEM61EiKq5p90IQpHlQEb0SC', 3),
+('USR-6337262134124', 'IMG-633726214104c.jpg', 'พรทิพย์', 'ขำจิตร', '0873369855', 14, 'ponthip@user', '$2y$10$RrnB6YsoOKVpQSZ0ddCxneOVd612e6.9sEOzdgqbdOnBOj53CU1.i', '$2y$10$av.1roOPWUWtGpI1BwmuFehZUjhOVTJzB3ai.tW6x1ARDvoGQt.6.', 3);
 
 -- --------------------------------------------------------
 
@@ -296,6 +322,12 @@ INSERT INTO `user_level` (`level_id`, `level_name`) VALUES
 --
 ALTER TABLE `device_type`
   ADD PRIMARY KEY (`type_id`);
+
+--
+-- Indexes for table `notify_setting`
+--
+ALTER TABLE `notify_setting`
+  ADD PRIMARY KEY (`noti_id`);
 
 --
 -- Indexes for table `request`
@@ -372,6 +404,12 @@ ALTER TABLE `device_type`
   MODIFY `type_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสประเภทครุภัณฑ์', AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `notify_setting`
+--
+ALTER TABLE `notify_setting`
+  MODIFY `noti_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `request_servey`
 --
 ALTER TABLE `request_servey`
@@ -381,7 +419,7 @@ ALTER TABLE `request_servey`
 -- AUTO_INCREMENT for table `request_solving`
 --
 ALTER TABLE `request_solving`
-  MODIFY `solv_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสบันทึกการดำเนินการ', AUTO_INCREMENT=11;
+  MODIFY `solv_id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'รหัสบันทึกการดำเนินการ', AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `servey_list`

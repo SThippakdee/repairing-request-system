@@ -1,6 +1,7 @@
 <?php
     if(session_status()==PHP_SESSION_NONE) session_start();
     require_once("database/connect.php");
+    require_once("be-sendnotify.php");
     if(isset($_POST["action"])){
         $action = $_POST["action"];
 
@@ -21,6 +22,23 @@
             $stmt->prepare($sql);
             $stmt->bind_param('ssiissss', $req_id, $user_id, $service_id, $type_id, $dev_serial, $req_date, $req_detail, $req_status);
             if($stmt->execute()){
+                //Send notify
+                $sql="SELECT * FROM notify_setting WHERE noti_id = 1;";
+                $notiResult = $repairDB->query($sql);
+                $noti = $notiResult->fetch_assoc();
+                if($noti["noti_active"] == "on" && $noti["noti_token"] != ""){
+                    $sql="SELECT user_name, user_lastname FROM user WHERE user_id ='$user_id';";
+                    $userResult = $repairDB->query($sql);
+                    $user = $userResult->fetch_assoc();
+                    $username = $user["user_name"]." ".$user["user_lastname"];
+
+                    $message =  "\nรายการแจ้งซ่อมใหม่".
+                                "\nรหัส: $req_id".
+                                "\nผู้แจ้ง: $username".
+                                "\nวันที่แจ้ง: ".date('d/m/Y');
+                    $test_result = sendNotify($noti["noti_token"], $message);
+                }
+
                 echo "success";
             }else{
                 die("alert|ไม่สามารถเพิ่มรายการได้ :". $repairDB->error);

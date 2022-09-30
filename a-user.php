@@ -14,6 +14,7 @@
 	<!-- Include fonts/css/js -->
 	<link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
 	
+	<link href="asset/vendors/select2/select2.min.css" rel="stylesheet">
 	<link href="asset/vendors/datatable/datatables.min.css" rel="stylesheet">
 	<link href="asset/vendors/datatable/buttons.dataTables.min.css" rel="stylesheet">
 	<link href="asset/css/app.css" rel="stylesheet">
@@ -24,7 +25,7 @@
     <script src="asset/vendors/sweetalert2/sweetalert2.all.min.js"></script>
 	<script src="asset/vendors/datatable/datatables.min.js"></script>
 	<script src="asset/vendors/datatable/dataTables.buttons.min.js"></script>
-	
+	<script src="asset/vendors/select2/select2.min.js"></script>
 
 	<!-- Page Style -->
 	<STYLE type="text/css">
@@ -35,6 +36,9 @@
 			overflow: hidden;
 			object-fit: cover;
 		}
+		.select2 {
+            width:100%!important;
+        }
 		.card-profile-img {
 			position: relative;
 			width: 8rem;
@@ -77,6 +81,52 @@
 				<div class="container-fluid p-0">
 					<!--Start Content-->
 					<h3 id="pageName" class="fw-bold mb-3">บัญชีผู้ใช้</h3>
+					<div class="row">
+						<div class="col-12">
+							<div class="card shadow-lg">
+								<div class="card-body">
+									<div class="row">
+										<div class="col mt-2">
+											
+												<div class="row g-2 mb-3">
+													<div class="col-12 col-md-6">
+														
+														<?php
+															$sql = sprintf("SELECT * FROM user_dep ORDER BY dep_name;");
+															$depResult=$repairDB->query($sql);
+														?>
+
+														หน่วยงาน/แผนก
+														<select id="dep_id" name="dep_id" class="form-select">
+															<option selected value= ''>หน่วยงานทั้งหมด</option>
+															<option value= 'ไม่มีหน่วยงาน'>ไม่มีหน่วยงาน</option>
+
+															<?php
+															while ($dep = $depResult->fetch_assoc()){
+															?>
+
+															<option value="<?php echo $dep['dep_name']?>" >
+																<?php echo $dep['dep_name']?>
+															</option>
+															
+															<?php
+															}
+															?>
+
+														</select>
+													</div>
+													<div class="col-12 col-md-6">
+														ค้นหาข้อมูล
+														<input id="searchWord" class="form-control form-control-lg" type="text" placeholder="ค้นหาจากคำ..." autofocus autocomplete="off">
+													</div>
+												</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
 					<div class="row row-cols-1 g-4">
 						<div class="col">
@@ -99,9 +149,6 @@
 												</a>
 											</div>
 										</div>
-									</div>
-									<div class="col-12 col-lg-6">
-										<input id="searchWord" class="form-control form-control-lg" type="text" placeholder="ค้นหา..." autofocus autocomplete="off">
 									</div>
 									<hr>
 								</div>
@@ -177,7 +224,7 @@
 											</td>
 											<td>
 												<span class="d-inline-block text-truncate" style="max-width: 200px;">
-													<?php echo $user["dep_name"];?>
+													<?php echo $user["dep_name"] != '' ? $user["dep_name"] : "ไม่มีหน่วยงาน";?>
 												</span>
 											</td>
 											<td>
@@ -214,6 +261,15 @@
 	<script src="app/script/sidebar.js"></script>
 	<script src="app/script/table.js"></script>
 	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#dep_id').select2();
+		});
+
+		$('#dep_id').change(function(){
+			var dep = $('#dep_id').val();
+			table.columns( 4 ).search( dep ).draw();
+		});
+
 		function showDetail(id) {
 			$.ajax({
 				type:'post',

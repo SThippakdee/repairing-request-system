@@ -80,7 +80,7 @@
 						<div class="row g-3 h-100">
 							<div class="col-xl-4 mt-0 mb-2">
 								<div class="card card-profile shadow-lg h-100 mb-0">
-									<div class="card-header" style="background-image: url(img/pics/profile-bg.jpg);"> </div>
+									<div class="card-header" style="background-image: url(img/pics/body/profile-bg.jpg);"> </div>
 									
 									<div class="card-body text-center">
 
@@ -115,7 +115,7 @@
 							</div>
 							<div class="col-xl-8 mt-0 mb-2">
 								<div class="card card-profile overflow-hidden shadow-lg h-100 mb-0">
-									<div class="card-header text-center d-table" style="background-image: url(img/pics/profile-bg.jpg);">
+									<div class="card-header text-center d-table" style="background-image: url(img/pics/body/profile-bg.jpg);">
 										<div class="d-table-cell align-middle p-0">
 											<h1 class="text-white fw-bold">
 												Repairing Request
